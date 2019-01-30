@@ -21,6 +21,11 @@ public class Sys_Dev {
     //Protected var for multiple tickets which should equal to a total price
     protected double total_price;
     
+    //Protected vars for Receipt class
+    protected int receipt_no;
+    protected String receipt_date;
+    
+    
     //protected var for discounts
     protected double discount_1 = total_price / 100 * 10; //10% discount if user purchases a ticket between Monday - Thursday
     
