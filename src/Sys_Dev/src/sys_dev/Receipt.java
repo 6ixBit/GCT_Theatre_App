@@ -1,8 +1,8 @@
 package sys_dev;
 
 
-public class Receipt extends Sys_Dev {
-
+public class Receipt extends Home {
+     
 public int get_receipt_no(){
     return receipt_no;
 }
@@ -18,5 +18,4 @@ public String get_receipt_date(){
 public void set_receipt_date(String receipt_date){
     this.receipt_date = receipt_date;
 }
-    
 }

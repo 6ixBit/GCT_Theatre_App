@@ -1,6 +1,6 @@
 package sys_dev;
 
-public class Ticket extends User {
+public class Ticket extends Home {
 
     public int get_ticket_no() {
         return ticket_no;

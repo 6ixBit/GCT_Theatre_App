@@ -2,7 +2,7 @@
 package sys_dev;
 
 
-public class User extends Sys_Dev {
+public class User extends Home {
      
     //Get username of user
     public String get_user(){
