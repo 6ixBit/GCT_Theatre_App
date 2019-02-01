@@ -103,6 +103,9 @@
       <AccessibilityProperties>
         <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="button_Login"/>
       </AccessibilityProperties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_loginActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="Button_signup">
       <Properties>
