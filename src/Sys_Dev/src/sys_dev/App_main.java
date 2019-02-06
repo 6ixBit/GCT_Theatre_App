@@ -43,7 +43,7 @@ public class App_main extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel3.setText("£");
 
-        label_Basket.setText("9.00");
+        label_Basket.setText("0.00");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
