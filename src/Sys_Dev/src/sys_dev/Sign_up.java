@@ -2,6 +2,11 @@ package sys_dev;
 
 import javax.swing.JOptionPane;
 import java.util.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Sign_up extends javax.swing.JFrame {
 
@@ -9,7 +14,6 @@ public class Sign_up extends javax.swing.JFrame {
         initComponents();
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -124,13 +128,11 @@ public class Sign_up extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Button_signup_submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_signup_submitActionPerformed
-        // TODO add your handling code here:
-        
-          //Input Validation
-         boolean sign_up = false;
-         User u1 = new User();
 
-        
+        //Input Validation
+        boolean sign_up = false;
+        User u1 = new User();
+
         if (textbox_signup_Username.getText() == null || textbox_signup_Username.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please enter a username", "Stop", JOptionPane.ERROR_MESSAGE);
 
@@ -146,36 +148,55 @@ public class Sign_up extends javax.swing.JFrame {
         } else if (textbox_signup_Email.getText() == null || textbox_signup_Email.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please enter your email address", "Stop", JOptionPane.ERROR_MESSAGE);
         } else { //DB Writing of details will go here
-            JOptionPane.showMessageDialog(null, "You can now login!", "Sign up sucessfull", JOptionPane.INFORMATION_MESSAGE); //Tell user DB write was successful
             this.hide(); //Hide old form
             sign_up = true; //Sets login token to true
 
         }
-        
-        if (sign_up == true){
+
+        if (sign_up == true) {
             u1.set_user(textbox_signup_Username.getText());
             u1.set_pass(textbox_signup_Password.getText());
             u1.set_address(textbox_signup_Address.getText());
             u1.set_postcode(textbox_signup_Postcode.getText());
             u1.set_numb(textbox_signup_Number.getText());
-            u1.set_email(textbox_signup_Email.getText());   
+            u1.set_email(textbox_signup_Email.getText());
+
+            //Store sign up info in database
+            InsertData(u1.get_user(), u1.get_pass(), u1.get_address(), u1.get_numb(), u1.get_email(), u1.get_postcode());
+
+            //Tell user DB write was successful
+            JOptionPane.showMessageDialog(null, "You can now login!", "Sign up sucessfull", JOptionPane.INFORMATION_MESSAGE);
+
         }
-        
-        //TESTING REMOVE WHEN DONE
-        System.out.println(u1.get_user());
-        System.out.println(u1.get_pass());
-        System.out.println(u1.get_address());
-        System.out.println(u1.get_numb());
-        System.out.println(u1.get_email());
-        System.out.println(u1.get_postcode());
-    
+
     }//GEN-LAST:event_Button_signup_submitActionPerformed
 
-   
-    
-    
-    
-    
+    public static void InsertData(String user, String pass, String address, String numb, String email, String postcode) {
+
+        Connection connect = null; //Set connector to null
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver"); //Loading driver
+
+            connect = DriverManager.getConnection("jdbc:ucanaccess://./GCT.accdb"); //String path to database which is the main project source folder
+            System.out.println("Connection to database successfull");
+
+            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO User (username, passw, number, address, postcode, e_mail)VALUES(?, ?, ?, ?, ?, ?)"); //SQL statement to get data
+            preparedStatement.setString(1, user);
+            preparedStatement.setString(2, pass);
+            preparedStatement.setString(3, address);
+            preparedStatement.setString(4, numb);
+            preparedStatement.setString(5, email);
+            preparedStatement.setString(6, postcode);
+            preparedStatement.executeUpdate();
+
+            connect.close();
+            preparedStatement.close();
+            System.out.println("User signed up");
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

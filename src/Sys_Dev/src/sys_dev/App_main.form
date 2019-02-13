@@ -83,11 +83,13 @@
                   <Component id="label_Name" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="Event_1" alignment="3" min="-2" pref="200" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="Event_2" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="Event_3" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="Event_4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="Event_1" alignment="3" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Component id="Event_4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace min="127" pref="183" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
