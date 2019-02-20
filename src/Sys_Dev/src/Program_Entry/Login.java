@@ -3,7 +3,6 @@ package sys_dev;
 import javax.swing.JOptionPane;
 import Database.Singleton; //Importing Class from separate package
 
-
 public class Login extends javax.swing.JFrame {
 
     public Login() {
@@ -101,6 +100,7 @@ public class Login extends javax.swing.JFrame {
     private void Button_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_loginActionPerformed
         // Setting up object to reference mainn form
         App_main ap = new App_main();
+        User u1 = new User();
 
         //Validation check to see if fields are left empty
         if (textbox_login_Username.getText() == null || textbox_login_Username.getText().isEmpty()) {
@@ -108,15 +108,19 @@ public class Login extends javax.swing.JFrame {
         } else if (textbox_login_Password.getText() == null || textbox_login_Password.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please enter a password", "Stop", JOptionPane.ERROR_MESSAGE);
         } else {
-            ap.setVisible(true); //Show next form
-            this.setVisible(false); //Hide old form
-        }
-        
-        //Method call for logging in to go here
-        
-    }//GEN-LAST:event_Button_loginActionPerformed
+            //Pass input to user object - Once both fields aren't empty
+            u1.set_user(textbox_login_Username.getText());
+            u1.set_pass(textbox_login_Password.getText());
+            Singleton.login(u1.get_user(), u1.get_pass()); //Call DB method to check login
 
-    
+            //If User input is found in database then
+            if (Singleton.status == true) {
+                ap.setVisible(true); //Show next form
+                this.setVisible(false); //Hide old form
+            }
+    }//GEN-LAST:event_Button_loginActionPerformed
+    }
+
     /**
      * @param args the command line arguments
      */

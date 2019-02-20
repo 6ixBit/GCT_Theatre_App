@@ -166,6 +166,9 @@ public class Sign_up extends javax.swing.JFrame {
 
             //Tell user DB write was successful
             JOptionPane.showMessageDialog(null, "You can now login!", "Sign up sucessfull", JOptionPane.INFORMATION_MESSAGE);
+            
+            //Clear object of current data as we dont need it anymore
+            Singleton.clear(u1.user_name, u1.pass_w, u1.address, u1.postcode, u1.numb, u1.e_mail);
         }
     }//GEN-LAST:event_Button_signup_submitActionPerformed
 

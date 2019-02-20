@@ -1,4 +1,3 @@
-
 package Database;
 
 //Import DB stuff
@@ -8,29 +7,31 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import javax.swing.JOptionPane;
 
 //Singleton Design Pattern - All Classes that talk to database go through this class
 public class Singleton {
-    
+
     private static Singleton instance = null;
-    
+
+    //Check Login status
+    public static boolean status = false;
+
     //So that other classes can't create an instance of it
-    private Singleton(){
+    private Singleton() {
     }
-    
+
     //Method which returns an object of this singleton class
-    public static synchronized Singleton getInstance(){
-     
+    public static synchronized Singleton getInstance() {
+
         if (instance == null) { //Prevents two instances being created at the same time
             instance = new Singleton();
         }
         return instance;
     }
-    
-    
+
     //Insert Sign up Info into database
-     public static void InsertData(String user, String pass, String address, String numb, String email, String postcode) {
+    public static void InsertData(String user, String pass, String address, String numb, String email, String postcode) {
 
         Connection connect = null; //Set connector to null
         try {
@@ -55,20 +56,45 @@ public class Singleton {
             ex.printStackTrace();
         }
     }
-     
-     //Check DB for User Login
-     public static void login(String user, String pass){
-   
-         
-         
-         
-         
-         
-         
-         
-         //Throw Messagebox if Username not found
-     }
-     
-     
-   
+
+    //Check DB for User Login
+    public static void login(String user, String pass) {
+
+        Connection connect = null; //Set connector to null
+
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver"); //Loading driver
+
+            connect = DriverManager.getConnection("jdbc:ucanaccess://./GCT.accdb"); //String path to database which is the main project source folder
+            System.out.println("Connection to database successfull");
+
+            PreparedStatement preparedStatement = connect.prepareStatement("SELECT username,passw FROM User WHERE username=? AND passw=?"); //SQL statement to get data
+            preparedStatement.setString(1, user);
+            preparedStatement.setString(2, pass);
+            ResultSet rset = preparedStatement.executeQuery(); //Creating resultset object
+
+            if (rset.next()) {
+                JOptionPane.showMessageDialog(null, "Login successfull");
+                status = true; //Setting boolean to true
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid username or passowrd", "Access Denied", JOptionPane.ERROR_MESSAGE); //Throw error to user if username not found
+            }
+            connect.close();
+            preparedStatement.close();
+            System.out.println("User Logged in");
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+        //Throw Messagebox if Username not found
+    }
+
+    //Call this method to clear object to avoid data collision when reusing the object
+    public static void clear(String user, String pass, String address, String numb, String email, String postcode) {
+        user = "";
+        pass = "";
+        address = "";
+        numb = "";
+        email = "";
+        postcode = "";
+    }
 }
