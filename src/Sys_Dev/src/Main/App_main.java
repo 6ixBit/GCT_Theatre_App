@@ -1,16 +1,10 @@
 package sys_dev;
 
 import javax.swing.ImageIcon;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import Database.Singleton; //Importing Class from separate package
 
 public class App_main extends javax.swing.JFrame {
 
-  
-   
     public App_main() {
         initComponents();
         

@@ -1,12 +1,12 @@
 package sys_dev;
 
 import javax.swing.JOptionPane;
-import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import Database.Singleton; //Importing Class from separate package
 
 public class Sign_up extends javax.swing.JFrame {
 
@@ -161,41 +161,13 @@ public class Sign_up extends javax.swing.JFrame {
             u1.set_numb(textbox_signup_Number.getText());
             u1.set_email(textbox_signup_Email.getText());
 
-            //Store sign up info in database
-            InsertData(u1.get_user(), u1.get_pass(), u1.get_address(), u1.get_numb(), u1.get_email(), u1.get_postcode());
+            //Store sign up info in database by referncing Singleton class because it's static
+            Singleton.InsertData(u1.get_user(), u1.get_pass(), u1.get_address(), u1.get_numb(), u1.get_email(), u1.get_postcode());
 
             //Tell user DB write was successful
             JOptionPane.showMessageDialog(null, "You can now login!", "Sign up sucessfull", JOptionPane.INFORMATION_MESSAGE);
-
         }
-
     }//GEN-LAST:event_Button_signup_submitActionPerformed
-
-    public static void InsertData(String user, String pass, String address, String numb, String email, String postcode) {
-
-        Connection connect = null; //Set connector to null
-        try {
-            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver"); //Loading driver
-
-            connect = DriverManager.getConnection("jdbc:ucanaccess://./GCT.accdb"); //String path to database which is the main project source folder
-            System.out.println("Connection to database successfull");
-
-            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO User (username, passw, number, address, postcode, e_mail)VALUES(?, ?, ?, ?, ?, ?)"); //SQL statement to get data
-            preparedStatement.setString(1, user);
-            preparedStatement.setString(2, pass);
-            preparedStatement.setString(3, address);
-            preparedStatement.setString(4, numb);
-            preparedStatement.setString(5, email);
-            preparedStatement.setString(6, postcode);
-            preparedStatement.executeUpdate();
-
-            connect.close();
-            preparedStatement.close();
-            System.out.println("User signed up");
-        } catch (ClassNotFoundException | SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

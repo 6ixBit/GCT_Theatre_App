@@ -1,12 +1,7 @@
 package sys_dev;
 
 import javax.swing.JOptionPane;
-import java.util.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import Database.Singleton; //Importing Class from separate package
 
 
 public class Login extends javax.swing.JFrame {
@@ -117,10 +112,7 @@ public class Login extends javax.swing.JFrame {
             this.setVisible(false); //Hide old form
         }
         
-        
-        
-
-
+        //Method call for logging in to go here
         
     }//GEN-LAST:event_Button_loginActionPerformed
 
