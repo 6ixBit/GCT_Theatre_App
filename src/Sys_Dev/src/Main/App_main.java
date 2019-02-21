@@ -2,9 +2,22 @@ package sys_dev;
 
 import javax.swing.ImageIcon;
 import Database.Singleton; //Importing Class from separate package
+import java.util.ArrayList;
 
 public class App_main extends javax.swing.JFrame {
 
+    //List of Object of type class Home Loaded from database
+    ArrayList<ImageIcon> images = new ArrayList<>();
+    
+    //List of descriptions of images
+    ArrayList<Home> image_desc = new ArrayList<>();
+    
+       //List of descriptions of dates
+    ArrayList<Home> image_date = new ArrayList<>();
+    
+    
+    
+    
     public App_main() {
         initComponents();
         
@@ -12,10 +25,12 @@ public class App_main extends javax.swing.JFrame {
          User u1 = new User();
          label_Name.setText(u1.get_user()); //Sets label text to that of user currently signed in.   
          
+         //Calling method to query DB for images
+         Singleton.Event_Images(images, image_desc, image_date);
          
-         //Setting up mages of event
-         Event_1.setIcon(new ImageIcon("images/lion_king.jpg"));
-         Event_2.setIcon(new ImageIcon("images/book_of_mormon.jpg"));
+         //Setting up mages of event -- Throwing Error
+         //Event_1.setIcon(images.get(0));
+         
          Event_3.setIcon(new ImageIcon("images/les-miserables-chicago.jpg"));
          Event_4.setIcon(new ImageIcon("images/the-phantom-of-the-opera-200.jpg"));
          
@@ -143,6 +158,12 @@ public class App_main extends javax.swing.JFrame {
          Event_2.setIcon(new ImageIcon("images/Alladin.jpg"));
          Event_3.setIcon(new ImageIcon("images/warHorse.jpg"));
          Event_4.setIcon(new ImageIcon("images/jihad.jpg"));
+         
+         
+         //If Next PRessed then show description
+         
+         
+         
     }//GEN-LAST:event_Next_playActionPerformed
 
     /**

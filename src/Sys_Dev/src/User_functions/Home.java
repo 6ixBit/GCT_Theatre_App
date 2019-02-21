@@ -27,6 +27,9 @@ abstract public class Home {
     //protected var for discounts
     protected double discount_1 = total_price / 100 * 10; //10% discount if user purchases a ticket between Monday - Thursday
     
+    //ABstract Method
+    abstract public void clear();
+    
     //Default constructor with no values
     public Home(){  
     }

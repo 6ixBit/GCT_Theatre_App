@@ -18,4 +18,11 @@ public String get_receipt_date(){
 public void set_receipt_date(String receipt_date){
     this.receipt_date = receipt_date;
 }
+
+
+@Override
+public void clear(){
+ this.receipt_no = 0;
+ this.receipt_date = "";
+}
 }

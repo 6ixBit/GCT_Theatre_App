@@ -34,5 +34,13 @@ public class Ticket extends Home {
         this.ticket_price = price;
 
     }
+    
+    @Override
+    public void clear(){
+        this.event_date = "";
+        this.event_name = "";
+        this.ticket_no = 0;
+        this.ticket_price = 0;
+    }
 
 }

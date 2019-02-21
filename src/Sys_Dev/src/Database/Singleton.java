@@ -87,6 +87,55 @@ public class Singleton {
         }
         //Throw Messagebox if Username not found
     }
+    
+    //Takes in 3 ArrayLists which hold Name, Date and Images of each event
+    public static void Event_Images(ArrayList img, ArrayList desc, ArrayList date) {
+        //COunt items being passed
+        int count = 0;
+
+        Connection connect = null; //Set connector to null
+
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver"); //Loading driver
+
+            connect = DriverManager.getConnection("jdbc:ucanaccess://./GCT.accdb"); //String path to database which is the main project source folder
+            System.out.println("Connection to database successfull");
+
+            PreparedStatement preparedStatement = connect.prepareStatement("SELECT image FROM Event"); //SQL statement to get data
+            ResultSet rset = preparedStatement.executeQuery(); //Creating resultset object
+
+            PreparedStatement preparedStatement2 = connect.prepareStatement("SELECT * FROM Event"); //SQL statement to get data
+            ResultSet rset2 = preparedStatement2.executeQuery(); //Creating resultset object
+
+            PreparedStatement preparedStatement3 = connect.prepareStatement("SELECT * FROM Event"); //SQL statement to get data
+            ResultSet rset3 = preparedStatement3.executeQuery(); //Creating resultset object
+            
+
+            //Loop through objects in DB
+            while (rset.next()) {
+                count++;
+                //img.add(rset.getByte("image")); -- Not working
+            }
+
+            while (rset2.next()) {
+                //Adds descriptions to list
+                desc.add(rset.getString(4));
+            }
+
+            while (rset3.next()) {
+                //Adds descriptions to list
+                date.add(rset.getString(2));
+            }
+
+            System.out.println("Counted = " + count);
+            connect.close();
+            preparedStatement.close();
+            System.out.println("Images Loaded successfully");
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
 
     //Call this method to clear object to avoid data collision when reusing the object
     public static void clear(String user, String pass, String address, String numb, String email, String postcode) {

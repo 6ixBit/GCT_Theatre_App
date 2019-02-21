@@ -56,4 +56,15 @@ public class User extends Home {
         this.e_mail = email;
     }
     
+    @Override
+    public void clear() {
+        this.user_name = "";
+        this.pass_w = "";
+        this.address = "";
+        this.e_mail = "";
+        this.postcode = "";
+        this.numb = "";
+
+    }
+
 }
