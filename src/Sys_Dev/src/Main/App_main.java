@@ -2,36 +2,59 @@ package sys_dev;
 
 import javax.swing.ImageIcon;
 import Database.Singleton; //Importing Class from separate package
+import static com.oracle.jrockit.jfr.ContentType.Bytes;
+import static com.sun.webkit.graphics.WCImage.getImage;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class App_main extends javax.swing.JFrame {
 
     //List of Object of type class Home Loaded from database
-    ArrayList<ImageIcon> images = new ArrayList<>();
+    static ArrayList<Byte> images = new ArrayList<>();
+    
+    byte[] myImages = new byte[images.size()]; ///Byte Array to hold Byte ArrayList objects -- Sets size of Byte Array to that of ArrayList defined above it
 
+    
+    
     //List of descriptions of images
     ArrayList<Home> image_desc = new ArrayList<>();
+    String[] image_desc_str = new String[image_desc.size()];
 
     //List of descriptions of dates
     ArrayList<Home> image_date = new ArrayList<>();
+    
+    //List of name of events
+    ArrayList<Home> name = new ArrayList<>();
 
     public App_main() {
         initComponents();
-
+  
         //Not working currently.
         User u1 = new User();
         label_Name.setText(u1.get_user()); //Sets label text to that of user currently signed in.   
 
         //Calling method to query DB for images
-        Singleton.Event_Images(images, image_desc, image_date);
+        Singleton.Event_Images(images, image_desc, image_date, name);
+                
+     
+        image_desc_str = image_desc.toArray(image_desc_str); //Converts arrayList to array so it can be read
         
-  
-    
-        //Setting up mages of event -- Throwing Error
-        //Event_1.setIcon(images.get(0));
-        Event_3.setIcon(new ImageIcon("images/les-miserables-chicago.jpg"));
+        
+        
+        
+        Event_1.setIcon(new ImageIcon("images/hamilton.jpg"));
+        Label_Event_1.setText("<html>" + image_desc_str[0] + "</html>"); //Gets text from ArrayList and converts to String
+        
+        Event_2.setIcon(new ImageIcon("images/lion_king.jpg"));
+        Label_Event_2.setText("<html>" + image_desc_str[1] + "</html>");
+        
+        Event_3.setIcon(new ImageIcon("images/warHorse.jpg"));
+        Label_Event_3.setText("<html>" + image_desc_str[2] + "</html>");
+        
         Event_4.setIcon(new ImageIcon("images/the-phantom-of-the-opera-200.jpg"));
-
+        Label_Event_4.setText("<html>" + image_desc_str[3] + "</html>");
+            
     }
 
     @SuppressWarnings("unchecked")
@@ -50,6 +73,10 @@ public class App_main extends javax.swing.JFrame {
         Event_3 = new javax.swing.JLabel();
         Event_2 = new javax.swing.JLabel();
         Event_4 = new javax.swing.JLabel();
+        Label_Event_1 = new javax.swing.JLabel();
+        Label_Event_2 = new javax.swing.JLabel();
+        Label_Event_3 = new javax.swing.JLabel();
+        Label_Event_4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,18 +110,20 @@ public class App_main extends javax.swing.JFrame {
 
         Event_4.setPreferredSize(new java.awt.Dimension(200, 200));
 
+        Label_Event_1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(label_Name)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 320, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(271, 271, 271)
                         .addComponent(jLabel2)
@@ -103,49 +132,62 @@ public class App_main extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(label_Basket))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Label_Event_1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Event_1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(65, 65, 65)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(previous_play))
+                                .addComponent(previous_play)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Event_3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Next_play)
+                                    .addComponent(Label_Event_3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(59, 59, 59))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addComponent(Event_1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                                .addComponent(Event_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Event_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Label_Event_2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Next_play)
-                                .addGap(433, 433, 433))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Event_3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36)
-                                .addComponent(Event_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(42, 42, 42))
+                            .addComponent(Label_Event_4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Event_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(label_Basket)
-                    .addComponent(jLabel4)
-                    .addComponent(label_Name))
-                .addGap(98, 98, 98)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Event_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Event_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Event_1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Event_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(127, 183, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(label_Basket)
+                            .addComponent(jLabel4)
+                            .addComponent(label_Name))
+                        .addGap(98, 98, 98)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Event_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Event_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(Event_1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Event_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(39, 39, 39)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Label_Event_1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Label_Event_2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Label_Event_3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(Label_Event_4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(59, 59, 59)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Next_play)
                     .addComponent(previous_play))
-                .addGap(105, 105, 105))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         pack();
@@ -161,6 +203,8 @@ public class App_main extends javax.swing.JFrame {
 
     }//GEN-LAST:event_Next_playActionPerformed
 
+  
+    
     /**
      * @param args the command line arguments
      */
@@ -202,6 +246,10 @@ public class App_main extends javax.swing.JFrame {
     private javax.swing.JLabel Event_2;
     private javax.swing.JLabel Event_3;
     private javax.swing.JLabel Event_4;
+    private javax.swing.JLabel Label_Event_1;
+    private javax.swing.JLabel Label_Event_2;
+    private javax.swing.JLabel Label_Event_3;
+    private javax.swing.JLabel Label_Event_4;
     private javax.swing.JButton Next_play;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

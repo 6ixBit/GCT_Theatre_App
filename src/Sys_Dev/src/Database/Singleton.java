@@ -89,11 +89,10 @@ public class Singleton {
     }
 
     //Takes in 3 ArrayLists which hold Name, Date and Images of each event
-    public static void Event_Images(ArrayList img, ArrayList desc, ArrayList date) {
+    public static void Event_Images(ArrayList img, ArrayList desc, ArrayList date, ArrayList name) {
 
         //Count items being passed - Test - Remove when done
         int count = 0;
-   
 
         Connection connect = null; //Set connector to null
 
@@ -112,6 +111,9 @@ public class Singleton {
             PreparedStatement preparedStatement3 = connect.prepareStatement("SELECT event_date FROM Event"); //SQL statement to get data
             ResultSet rset3 = preparedStatement3.executeQuery(); //Creating resultset object
 
+            PreparedStatement preparedStatement4 = connect.prepareStatement("SELECT event_name FROM Event"); //SQL statement to get data
+            ResultSet rset4 = preparedStatement4.executeQuery(); //Creating resultset object
+
             //Loop through objects in DB - Adds images to arraylist to then be loaded by program
             while (rset.next()) {
                 count++;
@@ -125,6 +127,11 @@ public class Singleton {
             //Add dates to list
             while (rset3.next()) {
                 date.add(rset3.getString("event_date"));
+            }
+
+            //Adds name to list
+            while (rset4.next()) {
+                name.add(rset4.getString("event_name"));
             }
 
             System.out.println("Counted = " + count);
