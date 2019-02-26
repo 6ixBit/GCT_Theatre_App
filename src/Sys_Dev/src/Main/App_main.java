@@ -8,32 +8,30 @@ public class App_main extends javax.swing.JFrame {
 
     //List of Object of type class Home Loaded from database
     ArrayList<ImageIcon> images = new ArrayList<>();
-    
+
     //List of descriptions of images
     ArrayList<Home> image_desc = new ArrayList<>();
-    
-       //List of descriptions of dates
+
+    //List of descriptions of dates
     ArrayList<Home> image_date = new ArrayList<>();
-    
-    
-    
-    
+
     public App_main() {
         initComponents();
-        
+
         //Not working currently.
-         User u1 = new User();
-         label_Name.setText(u1.get_user()); //Sets label text to that of user currently signed in.   
-         
-         //Calling method to query DB for images
-         Singleton.Event_Images(images, image_desc, image_date);
-         
-         //Setting up mages of event -- Throwing Error
-         //Event_1.setIcon(images.get(0));
-         
-         Event_3.setIcon(new ImageIcon("images/les-miserables-chicago.jpg"));
-         Event_4.setIcon(new ImageIcon("images/the-phantom-of-the-opera-200.jpg"));
-         
+        User u1 = new User();
+        label_Name.setText(u1.get_user()); //Sets label text to that of user currently signed in.   
+
+        //Calling method to query DB for images
+        Singleton.Event_Images(images, image_desc, image_date);
+        
+  
+    
+        //Setting up mages of event -- Throwing Error
+        //Event_1.setIcon(images.get(0));
+        Event_3.setIcon(new ImageIcon("images/les-miserables-chicago.jpg"));
+        Event_4.setIcon(new ImageIcon("images/the-phantom-of-the-opera-200.jpg"));
+
     }
 
     @SuppressWarnings("unchecked")
@@ -154,23 +152,20 @@ public class App_main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Next_playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Next_playActionPerformed
-         Event_1.setIcon(new ImageIcon("images/singin_in_the.jpg")); //This should allow us to change the image of labels
-         Event_2.setIcon(new ImageIcon("images/Alladin.jpg"));
-         Event_3.setIcon(new ImageIcon("images/warHorse.jpg"));
-         Event_4.setIcon(new ImageIcon("images/jihad.jpg"));
-         
-         
-         //If Next PRessed then show description
-         
-         
-         
+        Event_1.setIcon(new ImageIcon("images/singin_in_the.jpg")); //This should allow us to change the image of labels
+        Event_2.setIcon(new ImageIcon("images/Alladin.jpg"));
+        Event_3.setIcon(new ImageIcon("images/warHorse.jpg"));
+        Event_4.setIcon(new ImageIcon("images/jihad.jpg"));
+
+        //If Next PRessed then show description
+
     }//GEN-LAST:event_Next_playActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-      
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

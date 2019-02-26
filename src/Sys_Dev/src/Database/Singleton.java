@@ -87,11 +87,13 @@ public class Singleton {
         }
         //Throw Messagebox if Username not found
     }
-    
+
     //Takes in 3 ArrayLists which hold Name, Date and Images of each event
     public static void Event_Images(ArrayList img, ArrayList desc, ArrayList date) {
-        //COunt items being passed
+
+        //Count items being passed - Test - Remove when done
         int count = 0;
+   
 
         Connection connect = null; //Set connector to null
 
@@ -104,33 +106,32 @@ public class Singleton {
             PreparedStatement preparedStatement = connect.prepareStatement("SELECT image FROM Event"); //SQL statement to get data
             ResultSet rset = preparedStatement.executeQuery(); //Creating resultset object
 
-            PreparedStatement preparedStatement2 = connect.prepareStatement("SELECT * FROM Event"); //SQL statement to get data
+            PreparedStatement preparedStatement2 = connect.prepareStatement("SELECT description FROM Event"); //SQL statement to get data
             ResultSet rset2 = preparedStatement2.executeQuery(); //Creating resultset object
 
-            PreparedStatement preparedStatement3 = connect.prepareStatement("SELECT * FROM Event"); //SQL statement to get data
+            PreparedStatement preparedStatement3 = connect.prepareStatement("SELECT event_date FROM Event"); //SQL statement to get data
             ResultSet rset3 = preparedStatement3.executeQuery(); //Creating resultset object
-            
 
-            //Loop through objects in DB
+            //Loop through objects in DB - Adds images to arraylist to then be loaded by program
             while (rset.next()) {
                 count++;
-                //img.add(rset.getByte("image")); -- Not working
+                img.add(rset.getBytes("image"));
             }
 
+            //Add descriptions to list to be read from
             while (rset2.next()) {
-                //Adds descriptions to list
-                desc.add(rset.getString(4));
+                desc.add(rset2.getString("description"));
             }
-
+            //Add dates to list
             while (rset3.next()) {
-                //Adds descriptions to list
-                date.add(rset.getString(2));
+                date.add(rset3.getString("event_date"));
             }
 
             System.out.println("Counted = " + count);
             connect.close();
             preparedStatement.close();
             System.out.println("Images Loaded successfully");
+
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
         }
