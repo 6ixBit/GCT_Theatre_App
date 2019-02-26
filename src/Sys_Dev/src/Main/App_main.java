@@ -15,48 +15,50 @@ public class App_main extends javax.swing.JFrame {
     
     byte[] myImages = new byte[images.size()]; ///Byte Array to hold Byte ArrayList objects -- Sets size of Byte Array to that of ArrayList defined above it
 
-    
-    
     //List of descriptions of images
     ArrayList<Home> image_desc = new ArrayList<>();
     String[] image_desc_str = new String[image_desc.size()];
 
     //List of descriptions of dates
     ArrayList<Home> image_date = new ArrayList<>();
-    
+
     //List of name of events
     ArrayList<Home> name = new ArrayList<>();
-
+    String[] name_str = new String[name.size()];
+    
+    
     public App_main() {
         initComponents();
-  
+        this.setResizable(false);
+
         //Not working currently.
         User u1 = new User();
         label_Name.setText(u1.get_user()); //Sets label text to that of user currently signed in.   
 
         //Calling method to query DB for images
         Singleton.Event_Images(images, image_desc, image_date, name);
-                
-     
+        
         image_desc_str = image_desc.toArray(image_desc_str); //Converts arrayList to array so it can be read
+        name_str = name.toArray(name_str);
         
-        
-        
-        
+        //Images still need to be read from DB -- Still needs fix
         Event_1.setIcon(new ImageIcon("images/hamilton.jpg"));
         Label_Event_1.setText("<html>" + image_desc_str[0] + "</html>"); //Gets text from ArrayList and converts to String
+        Label_EventName_1.setText("<html>" + name_str[0] + "</html>");
         
         Event_2.setIcon(new ImageIcon("images/lion_king.jpg"));
         Label_Event_2.setText("<html>" + image_desc_str[1] + "</html>");
+        Label_EventName_2.setText("<html>" + name_str[1] + "</html>");
         
         Event_3.setIcon(new ImageIcon("images/warHorse.jpg"));
         Label_Event_3.setText("<html>" + image_desc_str[2] + "</html>");
+        Label_EventName_3.setText("<html>" + name_str[2] + "</html>");
         
         Event_4.setIcon(new ImageIcon("images/the-phantom-of-the-opera-200.jpg"));
         Label_Event_4.setText("<html>" + image_desc_str[3] + "</html>");
-            
+        Label_EventName_4.setText("<html>" + name_str[3] + "</html>");
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -77,6 +79,10 @@ public class App_main extends javax.swing.JFrame {
         Label_Event_2 = new javax.swing.JLabel();
         Label_Event_3 = new javax.swing.JLabel();
         Label_Event_4 = new javax.swing.JLabel();
+        Label_EventName_1 = new javax.swing.JLabel();
+        Label_EventName_2 = new javax.swing.JLabel();
+        Label_EventName_3 = new javax.swing.JLabel();
+        Label_EventName_4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,6 +118,14 @@ public class App_main extends javax.swing.JFrame {
 
         Label_Event_1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
 
+        Label_EventName_1.setText("---");
+
+        Label_EventName_2.setText("-----");
+
+        Label_EventName_3.setText("-------");
+
+        Label_EventName_4.setText("-------");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -119,18 +133,6 @@ public class App_main extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(label_Name)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 320, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(271, 271, 271)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(label_Basket))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -142,19 +144,45 @@ public class App_main extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(previous_play)
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Event_3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Next_play)
-                                    .addComponent(Label_Event_3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(59, 59, 59))
+                                .addComponent(Next_play)
+                                .addGap(235, 235, 235))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Event_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Label_Event_2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(Event_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Event_3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(81, 81, 81))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Label_Event_2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Label_Event_3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(81, 81, 81)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(Label_Event_4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Event_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(Event_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(label_Name)
+                                .addGap(292, 292, 292)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(68, 68, 68)
+                                .addComponent(Label_EventName_1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(203, 203, 203)
+                                .addComponent(Label_EventName_2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(209, 209, 209)
+                                .addComponent(Label_EventName_3, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(198, 198, 198)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel3))
+                            .addComponent(Label_EventName_4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(label_Basket)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -170,7 +198,13 @@ public class App_main extends javax.swing.JFrame {
                             .addComponent(label_Basket)
                             .addComponent(jLabel4)
                             .addComponent(label_Name))
-                        .addGap(98, 98, 98)
+                        .addGap(56, 56, 56)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Label_EventName_1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Label_EventName_2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Label_EventName_3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Label_EventName_4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Event_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Event_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -187,7 +221,7 @@ public class App_main extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Next_play)
                     .addComponent(previous_play))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
@@ -203,8 +237,6 @@ public class App_main extends javax.swing.JFrame {
 
     }//GEN-LAST:event_Next_playActionPerformed
 
-  
-    
     /**
      * @param args the command line arguments
      */
@@ -246,6 +278,10 @@ public class App_main extends javax.swing.JFrame {
     private javax.swing.JLabel Event_2;
     private javax.swing.JLabel Event_3;
     private javax.swing.JLabel Event_4;
+    private javax.swing.JLabel Label_EventName_1;
+    private javax.swing.JLabel Label_EventName_2;
+    private javax.swing.JLabel Label_EventName_3;
+    private javax.swing.JLabel Label_EventName_4;
     private javax.swing.JLabel Label_Event_1;
     private javax.swing.JLabel Label_Event_2;
     private javax.swing.JLabel Label_Event_3;
