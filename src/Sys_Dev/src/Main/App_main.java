@@ -2,17 +2,15 @@ package sys_dev;
 
 import javax.swing.ImageIcon;
 import Database.Singleton; //Importing Class from separate package
-import static com.oracle.jrockit.jfr.ContentType.Bytes;
-import static com.sun.webkit.graphics.WCImage.getImage;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class App_main extends javax.swing.JFrame {
 
+    //This will be used by all the lists to determine what part of the slide show gets shown to the user.
+    private int index = 0;
+
     //List of Object of type class Home Loaded from database
     static ArrayList<Byte> images = new ArrayList<>();
-    
     byte[] myImages = new byte[images.size()]; ///Byte Array to hold Byte ArrayList objects -- Sets size of Byte Array to that of ArrayList defined above it
 
     //List of descriptions of images
@@ -21,12 +19,12 @@ public class App_main extends javax.swing.JFrame {
 
     //List of descriptions of dates
     ArrayList<Home> image_date = new ArrayList<>();
+    String[] image_date_str = new String[image_date.size()];
 
     //List of name of events
     ArrayList<Home> name = new ArrayList<>();
     String[] name_str = new String[name.size()];
-    
-    
+
     public App_main() {
         initComponents();
         this.setResizable(false);
@@ -37,28 +35,19 @@ public class App_main extends javax.swing.JFrame {
 
         //Calling method to query DB for images
         Singleton.Event_Images(images, image_desc, image_date, name);
-        
+
         image_desc_str = image_desc.toArray(image_desc_str); //Converts arrayList to array so it can be read
         name_str = name.toArray(name_str);
-        
+        image_date_str = image_date.toArray(image_date_str);
+
         //Images still need to be read from DB -- Still needs fix
         Event_1.setIcon(new ImageIcon("images/hamilton.jpg"));
-        Label_Event_1.setText("<html>" + image_desc_str[0] + "</html>"); //Gets text from ArrayList and converts to String
-        Label_EventName_1.setText("<html>" + name_str[0] + "</html>");
-        
-        Event_2.setIcon(new ImageIcon("images/lion_king.jpg"));
-        Label_Event_2.setText("<html>" + image_desc_str[1] + "</html>");
-        Label_EventName_2.setText("<html>" + name_str[1] + "</html>");
-        
-        Event_3.setIcon(new ImageIcon("images/warHorse.jpg"));
-        Label_Event_3.setText("<html>" + image_desc_str[2] + "</html>");
-        Label_EventName_3.setText("<html>" + name_str[2] + "</html>");
-        
-        Event_4.setIcon(new ImageIcon("images/the-phantom-of-the-opera-200.jpg"));
-        Label_Event_4.setText("<html>" + image_desc_str[3] + "</html>");
-        Label_EventName_4.setText("<html>" + name_str[3] + "</html>");
+        Label_Event_1.setText("<html>" + image_desc_str[index] + "</html>"); //Gets text from ArrayList and converts to String
+        Label_EventName_1.setText("<html>" + name_str[index] + "</html>");
+        Label_Date.setText("<html>" + image_date_str[index] + "</html>");
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -72,17 +61,12 @@ public class App_main extends javax.swing.JFrame {
         Next_play = new javax.swing.JButton();
         previous_play = new javax.swing.JButton();
         Event_1 = new javax.swing.JLabel();
-        Event_3 = new javax.swing.JLabel();
-        Event_2 = new javax.swing.JLabel();
-        Event_4 = new javax.swing.JLabel();
         Label_Event_1 = new javax.swing.JLabel();
-        Label_Event_2 = new javax.swing.JLabel();
-        Label_Event_3 = new javax.swing.JLabel();
-        Label_Event_4 = new javax.swing.JLabel();
         Label_EventName_1 = new javax.swing.JLabel();
-        Label_EventName_2 = new javax.swing.JLabel();
-        Label_EventName_3 = new javax.swing.JLabel();
-        Label_EventName_4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        Label_Price = new javax.swing.JLabel();
+        Label_8 = new javax.swing.JLabel();
+        Label_Date = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,133 +93,128 @@ public class App_main extends javax.swing.JFrame {
         });
 
         previous_play.setText("Back");
-
-        Event_3.setPreferredSize(new java.awt.Dimension(200, 200));
-
-        Event_2.setPreferredSize(new java.awt.Dimension(200, 200));
-
-        Event_4.setPreferredSize(new java.awt.Dimension(200, 200));
+        previous_play.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                previous_playActionPerformed(evt);
+            }
+        });
 
         Label_Event_1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
 
+        Label_EventName_1.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
         Label_EventName_1.setText("---");
 
-        Label_EventName_2.setText("-----");
+        jLabel5.setText("Price:");
 
-        Label_EventName_3.setText("-------");
+        Label_Price.setText("---");
 
-        Label_EventName_4.setText("-------");
+        Label_8.setText("Date:");
+
+        Label_Date.setText("---");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Label_Event_1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Event_1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(65, 65, 65)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(previous_play)
                                 .addGap(18, 18, 18)
                                 .addComponent(Next_play)
-                                .addGap(235, 235, 235))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Event_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Event_3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(81, 81, 81))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Label_Event_2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Label_Event_3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(81, 81, 81)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Label_Event_4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Event_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
+                                .addGap(465, 465, 465))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(label_Name)
                                 .addGap(292, 292, 292)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(68, 68, 68)
-                                .addComponent(Label_EventName_1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(203, 203, 203)
-                                .addComponent(Label_EventName_2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(209, 209, 209)
-                                .addComponent(Label_EventName_3, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(198, 198, 198)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(299, 299, 299)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel3))
-                            .addComponent(Label_EventName_4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(label_Basket)))
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(label_Basket))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Event_1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Label_Event_1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Label_EventName_1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Label_Price)
+                                .addGap(67, 67, 67)
+                                .addComponent(Label_8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Label_Date)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(label_Basket)
-                            .addComponent(jLabel4)
-                            .addComponent(label_Name))
-                        .addGap(56, 56, 56)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Label_EventName_1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Label_EventName_2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Label_EventName_3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Label_EventName_4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Event_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Event_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(Event_1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Event_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(39, 39, 39)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Label_Event_1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Label_Event_2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Label_Event_3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(Label_Event_4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(59, 59, 59)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(label_Basket)
+                    .addComponent(jLabel4)
+                    .addComponent(label_Name))
+                .addGap(74, 74, 74)
+                .addComponent(Label_EventName_1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Event_1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(Label_Price)
+                    .addComponent(Label_8)
+                    .addComponent(Label_Date))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Label_Event_1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Next_play)
                     .addComponent(previous_play))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void Next_playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Next_playActionPerformed
-        Event_1.setIcon(new ImageIcon("images/singin_in_the.jpg")); //This should allow us to change the image of labels
-        Event_2.setIcon(new ImageIcon("images/Alladin.jpg"));
-        Event_3.setIcon(new ImageIcon("images/warHorse.jpg"));
-        Event_4.setIcon(new ImageIcon("images/jihad.jpg"));
 
-        //If Next PRessed then show description
+        if (index < image_desc_str.length - 1) { //Using one Uniform condition as the lists will always be the same size
 
+            if (index != image_desc_str.length) {
+                ++index;
+            }
+            Label_Event_1.setText("<html>" + image_desc_str[index] + "</html>");
+            Label_EventName_1.setText("<html>" + name_str[index] + "</html>");
+            Label_Date.setText("<html>" + image_date_str[index] + "</html>");
+        }
+        //Only Testing Remove After
+        System.out.println(index);
     }//GEN-LAST:event_Next_playActionPerformed
+
+    private void previous_playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previous_playActionPerformed
+        //Decrement list by one if back button is pressed
+
+        if (index > 0) {
+            index--;
+            Label_Event_1.setText("<html>" + image_desc_str[index] + "</html>");
+            Label_EventName_1.setText("<html>" + name_str[index] + "</html>");
+            Label_Date.setText("<html>" + image_date_str[index] + "</html>");
+        }
+        //Only Testing Remove After
+        System.out.println(index);
+    }//GEN-LAST:event_previous_playActionPerformed
 
     /**
      * @param args the command line arguments
@@ -275,22 +254,17 @@ public class App_main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Event_1;
-    private javax.swing.JLabel Event_2;
-    private javax.swing.JLabel Event_3;
-    private javax.swing.JLabel Event_4;
+    private javax.swing.JLabel Label_8;
+    private javax.swing.JLabel Label_Date;
     private javax.swing.JLabel Label_EventName_1;
-    private javax.swing.JLabel Label_EventName_2;
-    private javax.swing.JLabel Label_EventName_3;
-    private javax.swing.JLabel Label_EventName_4;
     private javax.swing.JLabel Label_Event_1;
-    private javax.swing.JLabel Label_Event_2;
-    private javax.swing.JLabel Label_Event_3;
-    private javax.swing.JLabel Label_Event_4;
+    private javax.swing.JLabel Label_Price;
     private javax.swing.JButton Next_play;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel label_Basket;
     private javax.swing.JLabel label_Name;
     private javax.swing.JButton previous_play;
