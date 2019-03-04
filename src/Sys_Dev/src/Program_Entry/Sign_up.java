@@ -1,12 +1,8 @@
 package sys_dev;
 
 import javax.swing.JOptionPane;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import Database.Singleton; //Importing Class from separate package
+import Sys_Dev.*;
 
 public class Sign_up extends javax.swing.JFrame {
 

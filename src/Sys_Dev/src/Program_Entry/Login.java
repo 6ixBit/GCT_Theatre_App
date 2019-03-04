@@ -2,6 +2,7 @@ package sys_dev;
 
 import javax.swing.JOptionPane;
 import Database.Singleton; //Importing Class from separate package
+import Sys_Dev.*;
 
 public class Login extends javax.swing.JFrame {
 

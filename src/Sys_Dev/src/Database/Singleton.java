@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
+import Sys_Dev.*;
+
 //Singleton Design Pattern - All Classes that talk to database go through this class
 public class Singleton {
 

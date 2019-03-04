@@ -1,4 +1,5 @@
 package sys_dev;
+import Sys_Dev.*;
 
 
 public class Receipt extends Home {
