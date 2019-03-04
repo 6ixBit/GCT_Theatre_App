@@ -77,7 +77,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="Label_8" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="Label_Date" min="-2" pref="57" max="-2" attributes="0"/>
+                              <Component id="Label_Date" min="-2" pref="118" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>

@@ -27,7 +27,7 @@ public class App_main extends javax.swing.JFrame {
     //List of name of events
     ArrayList<Home> name = new ArrayList<>();
     String[] name_str = new String[name.size()];
-    
+
     //List of event price
     ArrayList<Home> prices = new ArrayList<>();
     String[] price_str = new String[prices.size()];
@@ -36,7 +36,7 @@ public class App_main extends javax.swing.JFrame {
         initComponents();
         this.setResizable(false);
 
-        //Not working currently.
+        
         User u1 = new User();
         label_Name.setText(u1.get_user()); //Sets label text to that of user currently signed in.   
 
@@ -48,31 +48,45 @@ public class App_main extends javax.swing.JFrame {
         image_date_str = image_date.toArray(image_date_str);
         price_str = prices.toArray(price_str);
 
+        
+        //Calls regex method to split date
+        for (int i = 0; i < image_date_str.length; i++) {
+            image_date_str[i] = split_date(image_date_str[i]);
+        }
+
         //Images still need to be read from DB -- Still needs fix
         Event_1.setIcon(new ImageIcon("images/hamilton.jpg"));
         Label_Event_1.setText("<html>" + image_desc_str[index] + "</html>"); //Gets text from ArrayList and converts to String
         Label_EventName_1.setText("<html>" + name_str[index] + "</html>");
         Label_Date.setText("<html>" + image_date_str[index] + "</html>");
         Label_Price.setText("<html>" + price_str[index] + "</html>");
-        
-        //Fill Upcooming table
+
+        //Fill Upcoming table
         Table_Fill("Greenwich Theatre");
 
     }
-    
-    public void Table_Fill(String location){
-     DefaultTableModel model_1 = (DefaultTableModel) table_Upcoming.getModel();
-     
-     //Loops through arrays and take data from them and adds to table
-     for (int i = 0; i < name_str.length; i++){
-      model_1.addRow(new Object[]{name_str[i], null, image_date_str[i]});
-     }
-      
-     //Set every column (3) to the location specified in method call, I done this as I assume GCT is the primary location for events and it allows for flexiblity if need be to change 
-     for (int j = 0; j < name_str.length; j++){
-         model_1.setValueAt(location, j, 3);
-     }   
-     table_Upcoming.setModel(model_1);
+
+    public void Table_Fill(String location) {
+        DefaultTableModel model_1 = (DefaultTableModel) table_Upcoming.getModel();
+
+        //Loops through arrays and take data from them and adds to table
+        for (int i = 0; i < name_str.length; i++) {
+            model_1.addRow(new Object[]{name_str[i], null, image_date_str[i]});
+        }
+
+        //Set every column (3) to the location specified in method call, I done this as I assume GCT is the primary location for events and it allows for flexiblity if need be to change 
+        for (int j = 0; j < name_str.length; j++) {
+            model_1.setValueAt(location, j, 3);
+        }
+        table_Upcoming.setModel(model_1);
+    }
+
+    //Method to split date string using regex
+    public String split_date(String element) {
+        String[] test = element.split("00");
+        System.out.println(test[0]);
+
+        return test[0];
     }
 
     @SuppressWarnings("unchecked")
@@ -251,7 +265,7 @@ public class App_main extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(Label_8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Label_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(Label_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
