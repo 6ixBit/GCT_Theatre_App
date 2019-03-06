@@ -18,6 +18,9 @@ public class Singleton {
 
     //Check Login status
     public static boolean status = false;
+    
+    //Check if Login username already exists
+    public static boolean exists = false;
 
     //So that other classes can't create an instance of it
     private Singleton() {
@@ -74,6 +77,8 @@ public class Singleton {
             preparedStatement.setString(1, user);
             preparedStatement.setString(2, pass);
             ResultSet rset = preparedStatement.executeQuery(); //Creating resultset object
+            
+            
 
             if (rset.next()) {
                 JOptionPane.showMessageDialog(null, "Login successfull");
@@ -90,12 +95,33 @@ public class Singleton {
         //Throw Messagebox if Username not found
     }
     
-    public static void user_i(){
-        
+    public static void check_user_exists(String Login) {
+        Connection connect = null; //Set connector to null
+
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver"); //Loading driver
+
+            connect = DriverManager.getConnection("jdbc:ucanaccess://./GCT.accdb"); //String path to database which is the main project source folder
+            System.out.println("Connection to database successfull");
+
+            PreparedStatement preparedStatement = connect.prepareStatement("SELECT username FROM User WHERE username=?"); //SQL statement to get data
+            preparedStatement.setString(1, Login);
+
+            ResultSet rset = preparedStatement.executeQuery(); //Creating resultset object
+
+            if (rset.next()) {
+                exists = true; //Sets boolean true to alert GUI that user already exists
+            } else {
+                System.out.println("You can now log in"); //Throw error to user if username not found
+                exists = false;
+            }
+            connect.close();
+            preparedStatement.close();
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
     }
     
-    
-
     //Takes in 3 ArrayLists which hold Name, Date and Images of each event
     public static void Event_Images(ArrayList img, ArrayList desc, ArrayList date, ArrayList name, ArrayList price, ArrayList time) {
 

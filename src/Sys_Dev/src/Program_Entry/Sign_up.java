@@ -146,9 +146,15 @@ public class Sign_up extends javax.swing.JFrame {
         } else if (textbox_signup_Email.getText() == null || textbox_signup_Email.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please enter your email address", "Stop", JOptionPane.ERROR_MESSAGE);
         } else { //DB Writing of details will go here
-            this.hide(); //Hide old form
-            sign_up = true; //Sets login token to true
 
+            Singleton.check_user_exists(textbox_signup_Username.getText());
+
+            if (Singleton.exists == true) {
+                JOptionPane.showMessageDialog(null, "This username already exists", "Enter another Username", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                this.hide(); //Hide old form
+                sign_up = true; //Sets login token to true
+            }
         }
 
         if (sign_up == true) {
@@ -164,7 +170,7 @@ public class Sign_up extends javax.swing.JFrame {
 
             //Tell user DB write was successful
             JOptionPane.showMessageDialog(null, "You can now login!", "Sign up sucessfull", JOptionPane.INFORMATION_MESSAGE);
-            
+
             //Clear object of current data as we dont need it anymore
             //Singleton.clear(u1.user_name, u1.pass_w, u1.address, u1.postcode, u1.numb, u1.e_mail);
         }
