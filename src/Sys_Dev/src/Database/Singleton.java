@@ -89,6 +89,12 @@ public class Singleton {
         }
         //Throw Messagebox if Username not found
     }
+    
+    public static void user_i(){
+        
+    }
+    
+    
 
     //Takes in 3 ArrayLists which hold Name, Date and Images of each event
     public static void Event_Images(ArrayList img, ArrayList desc, ArrayList date, ArrayList name, ArrayList price, ArrayList time) {

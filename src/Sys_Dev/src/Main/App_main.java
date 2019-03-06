@@ -103,10 +103,13 @@ public class App_main extends javax.swing.JFrame {
     public String split_time(String element) {
         String[] test = element.split("1899-12-30");
         System.out.println(test[0]);
-        for (String x : test) {
+        
+        String[] result = test[0].split(".");
+        
+        for (String x : result) {
             System.out.println(x);
         }
-        return test[0];
+        return result[0];
     }
 
     @SuppressWarnings("unchecked")

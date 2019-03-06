@@ -122,6 +122,8 @@ public class Login extends javax.swing.JFrame {
                 this.setVisible(false); //Hide old form
             }
     }//GEN-LAST:event_Button_loginActionPerformed
+    
+        
     }
 
     /**
