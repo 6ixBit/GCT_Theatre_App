@@ -1,10 +1,15 @@
-package sys_dev;
+package Main;
 
 import javax.swing.ImageIcon;
 import Database.Singleton; //Importing Class from separate package
 import java.util.ArrayList;
 
-import Sys_Dev.*;
+import sys_dev.*;
+import User_functions.*;
+        
+
+
+
 import javax.swing.table.DefaultTableModel;
 
 public class App_main extends javax.swing.JFrame {
@@ -32,26 +37,34 @@ public class App_main extends javax.swing.JFrame {
     ArrayList<Home> prices = new ArrayList<>();
     String[] price_str = new String[prices.size()];
 
+    //List of times of event
+    ArrayList<Home> times = new ArrayList<>();
+    String[] time_str = new String[times.size()];
+
     public App_main() {
         initComponents();
         this.setResizable(false);
 
-        
         User u1 = new User();
         label_Name.setText(u1.get_user()); //Sets label text to that of user currently signed in.   
 
         //Calling method to query DB for images
-        Singleton.Event_Images(images, image_desc, image_date, name, prices);
+        Singleton.Event_Images(images, image_desc, image_date, name, prices, times);
 
         image_desc_str = image_desc.toArray(image_desc_str); //Converts arrayList to array so it can be read
         name_str = name.toArray(name_str);
         image_date_str = image_date.toArray(image_date_str);
         price_str = prices.toArray(price_str);
+        time_str = times.toArray(time_str);
 
-        
         //Calls regex method to split date
         for (int i = 0; i < image_date_str.length; i++) {
             image_date_str[i] = split_date(image_date_str[i]);
+        }
+
+        //Calls regex method to split time - THIS IS CAUSING A PROBLEM FOR SOME REASON
+        for (int i = 0; i < image_date_str.length; i++) {
+            time_str[i] = split_time(time_str[i]);
         }
 
         //Images still need to be read from DB -- Still needs fix
@@ -71,7 +84,7 @@ public class App_main extends javax.swing.JFrame {
 
         //Loops through arrays and take data from them and adds to table
         for (int i = 0; i < name_str.length; i++) {
-            model_1.addRow(new Object[]{name_str[i], null, image_date_str[i]});
+            model_1.addRow(new Object[]{name_str[i], time_str[i], image_date_str[i]});
         }
 
         //Set every column (3) to the location specified in method call, I done this as I assume GCT is the primary location for events and it allows for flexiblity if need be to change 
@@ -84,8 +97,15 @@ public class App_main extends javax.swing.JFrame {
     //Method to split date string using regex
     public String split_date(String element) {
         String[] test = element.split("00");
-        System.out.println(test[0]);
+        return test[0];
+    }
 
+    public String split_time(String element) {
+        String[] test = element.split("1899-12-30");
+        System.out.println(test[0]);
+        for (String x : test) {
+            System.out.println(x);
+        }
         return test[0];
     }
 

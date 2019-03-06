@@ -1,5 +1,5 @@
-package sys_dev;
-import Sys_Dev.*;
+package User_functions;
+import sys_dev.*;
 
 
 public class Receipt extends Home {

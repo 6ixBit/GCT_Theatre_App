@@ -1,8 +1,10 @@
-package sys_dev;
+package Program_Entry;
 
 import javax.swing.JOptionPane;
 import Database.Singleton; //Importing Class from separate package
-import Sys_Dev.*;
+import sys_dev.*;
+import User_functions.User;
+import User_functions.Home;
 
 public class Sign_up extends javax.swing.JFrame {
 
@@ -164,7 +166,7 @@ public class Sign_up extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "You can now login!", "Sign up sucessfull", JOptionPane.INFORMATION_MESSAGE);
             
             //Clear object of current data as we dont need it anymore
-            Singleton.clear(u1.user_name, u1.pass_w, u1.address, u1.postcode, u1.numb, u1.e_mail);
+            //Singleton.clear(u1.user_name, u1.pass_w, u1.address, u1.postcode, u1.numb, u1.e_mail);
         }
     }//GEN-LAST:event_Button_signup_submitActionPerformed
 
