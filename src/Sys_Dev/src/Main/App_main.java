@@ -66,7 +66,7 @@ public class App_main extends javax.swing.JFrame {
         price_str = prices.toArray(price_str);
         time_str = times.toArray(time_str);
         
-        //Sets model forcombo box 
+        //Sets model for the combo box upon launch of application, this is fine as it gets read from database upon app launch
         DefaultComboBoxModel dm = new DefaultComboBoxModel(name_str);
         Cmb_Order.setModel(dm);
 
@@ -264,6 +264,11 @@ public class App_main extends javax.swing.JFrame {
         jLabel8.setText("£");
 
         Button_Order_Ticket.setText("Order ticket");
+        Button_Order_Ticket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_Order_TicketActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Please select an event you'd like to go to; ");
 
@@ -411,6 +416,14 @@ public class App_main extends javax.swing.JFrame {
         //Only Testing Remove After
         System.out.println(index);
     }//GEN-LAST:event_previous_playActionPerformed
+
+    private void Button_Order_TicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_Order_TicketActionPerformed
+        // TODO add your handling code here:
+        SeatingPlan sp = new SeatingPlan();
+        sp.return_lbl().setText(Cmb_Order.getSelectedItem().toString()); //Gets selected item from combo box and returns it to seating plan form 
+        
+        sp.show();
+    }//GEN-LAST:event_Button_Order_TicketActionPerformed
 
     /**
      * @param args the command line arguments

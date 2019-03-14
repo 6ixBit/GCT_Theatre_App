@@ -131,14 +131,13 @@ public class Login extends javax.swing.JFrame {
             ap.receipt_dates_str = ap.receipt_dates.toArray(ap.receipt_dates_str);
             ap.receipt_nos_str = ap.receipt_nos.toArray(ap.receipt_nos_str);
 
-            //Calls regex method to split date
+            //Calls regex method to split date of receipts
             for (int i = 0; i < ap.receipt_dates_str.length; i++) {
                 ap.receipt_dates_str[i] = ap.split_date(ap.receipt_dates_str[i]);
             }
 
             //Fill Upcoming table
             ap.Table_Fill("Greenwich Theatre");
-
 
     }//GEN-LAST:event_Button_loginActionPerformed
 
