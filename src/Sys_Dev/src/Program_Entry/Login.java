@@ -2,7 +2,6 @@ package Program_Entry;
 
 import javax.swing.JOptionPane;
 import Database.Singleton; //Importing Class from separate package
-import sys_dev.*;
 import Main.App_main;
 import User_functions.*;
 
@@ -121,9 +120,21 @@ public class Login extends javax.swing.JFrame {
                 ap.setVisible(true); //Show next form
                 this.setVisible(false); //Hide old form
             }
+
+            ap.get_Label_Name().setText(u1.get_user());
+
+            //Fill Your Orders table here
+            Singleton.User_Orders(u1.get_user(), ap.total_prices, ap.receipt_dates, ap.receipt_nos);
+
+            //Fill Upcoming table
+            ap.Table_Fill("Greenwich Theatre");
+            System.out.println(u1.get_user());
+            System.out.println(ap.total_prices_str[0]);
+            System.out.println(ap.total_prices_str[1]);
+
+
     }//GEN-LAST:event_Button_loginActionPerformed
-    
-        
+
     }
 
     /**

@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-import Sys_Dev.*;
+
 
 //Singleton Design Pattern - All Classes that talk to database go through this class
 public class Singleton {
@@ -77,11 +77,8 @@ public class Singleton {
             preparedStatement.setString(1, user);
             preparedStatement.setString(2, pass);
             ResultSet rset = preparedStatement.executeQuery(); //Creating resultset object
-            
-            
 
             if (rset.next()) {
-                JOptionPane.showMessageDialog(null, "Login successfull");
                 status = true; //Setting boolean to true
             } else {
                 JOptionPane.showMessageDialog(null, "Invalid username or passowrd", "Access Denied", JOptionPane.ERROR_MESSAGE); //Throw error to user if username not found
@@ -94,7 +91,7 @@ public class Singleton {
         }
         //Throw Messagebox if Username not found
     }
-    
+
     public static void check_user_exists(String Login) {
         Connection connect = null; //Set connector to null
 
@@ -192,6 +189,32 @@ public class Singleton {
             ex.printStackTrace();
         }
 
+    }
+    
+    public static void User_Orders(String username, ArrayList Total_prices, ArrayList Receipt_dates, ArrayList Receipt_nos) {
+
+        Connection connect = null; //Set connector to null
+
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver"); //Loading driver
+
+            connect = DriverManager.getConnection("jdbc:ucanaccess://./GCT.accdb"); //String path to database which is the main project source folder
+
+            PreparedStatement preparedStatement = connect.prepareStatement("SELECT Total_Price,Receipt_date,ReceiptNo FROM User AS u, Receipt AS r WHERE u.username=? AND u.ID = r.UserID"); //SQL statement to get data
+            preparedStatement.setString(1, username);
+            ResultSet rset = preparedStatement.executeQuery(); //Creating resultset object
+
+            while (rset.next()) {
+                Total_prices.add(rset.getString("Total_price"));
+                Receipt_dates.add(rset.getString("Receipt_date"));
+                Receipt_nos.add(rset.getString("ReceiptNo"));
+            }
+
+            connect.close();
+            preparedStatement.close();
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     //Call this method to clear object to avoid data collision when reusing the object

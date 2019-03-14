@@ -2,7 +2,7 @@
 package Main;
 
 import javax.swing.ImageIcon;
-import sys_dev.*;
+
 
 /**
  *

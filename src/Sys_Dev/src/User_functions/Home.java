@@ -1,5 +1,5 @@
 package User_functions;
-import sys_dev.*;
+
 
 abstract public class Home {
 
@@ -10,7 +10,6 @@ abstract public class Home {
     protected String address;
     protected String postcode;
     protected String e_mail;
-    protected String id; //This is what we're going to use to tell which user is logged in at any given time
     
     //Protected vars for ticket attributes
     protected int ticket_no;

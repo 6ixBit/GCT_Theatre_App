@@ -4,11 +4,8 @@ import javax.swing.ImageIcon;
 import Database.Singleton; //Importing Class from separate package
 import java.util.ArrayList;
 
-import sys_dev.*;
 import User_functions.*;
-        
-
-
+import javax.swing.JLabel;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -41,21 +38,39 @@ public class App_main extends javax.swing.JFrame {
     ArrayList<Home> times = new ArrayList<>();
     String[] time_str = new String[times.size()];
 
+    /////////* YOUR ORDERS TABLE *\\\\\\\\\\\\\\
+    //List of ReceiptNos
+    public ArrayList<String> receipt_nos = new ArrayList<>();
+    public String[] receipt_nos_str = new String[receipt_nos.size()];
+
+    //List of Receipt_date
+    public ArrayList<String> receipt_dates = new ArrayList<>();
+    public String[] receipt_dates_str = new String[receipt_dates.size()];
+
+    //List of total_price
+    public ArrayList<String> total_prices = new ArrayList<>();
+    public String[] total_prices_str = new String[total_prices.size()];
+
     public App_main() {
         initComponents();
         this.setResizable(false);
 
-        User u1 = new User();
-        label_Name.setText(u1.get_user()); //Sets label text to that of user currently signed in.   
-
         //Calling method to query DB for images
         Singleton.Event_Images(images, image_desc, image_date, name, prices, times);
 
-        image_desc_str = image_desc.toArray(image_desc_str); //Converts arrayList to array so it can be read
+        //Converts arrayList to array so it can be read
+        image_desc_str = image_desc.toArray(image_desc_str);
         name_str = name.toArray(name_str);
         image_date_str = image_date.toArray(image_date_str);
         price_str = prices.toArray(price_str);
         time_str = times.toArray(time_str);
+
+        //Converts objects from Your Orders table from ArrayList to Array - ERROR STILL SAYS THAT ARRAY IS BLANK EVEN THOUGH ITS BEING CONVERTED
+        for (int i = 0; i < total_prices.size(); i++) {
+            total_prices_str[i] = total_prices.get(i);
+            System.out.println("Bingo " + total_prices_str[i]);
+    
+        }
 
         //Calls regex method to split date
         for (int i = 0; i < image_date_str.length; i++) {
@@ -67,6 +82,11 @@ public class App_main extends javax.swing.JFrame {
             time_str[i] = split_time(time_str[i]);
         }
 
+        //Calls regex method to split date
+        for (int i = 0; i < receipt_dates_str.length; i++) {
+            receipt_dates_str[i] = split_date(receipt_dates_str[i]);
+        }
+
         //Images still need to be read from DB -- Still needs fix
         Event_1.setIcon(new ImageIcon("images/hamilton.jpg"));
         Label_Event_1.setText("<html>" + image_desc_str[index] + "</html>"); //Gets text from ArrayList and converts to String
@@ -74,13 +94,15 @@ public class App_main extends javax.swing.JFrame {
         Label_Date.setText("<html>" + image_date_str[index] + "</html>");
         Label_Price.setText("<html>" + price_str[index] + "</html>");
 
-        //Fill Upcoming table
-        Table_Fill("Greenwich Theatre");
+    }
 
+    public JLabel get_Label_Name() {
+        return label_Name;
     }
 
     public void Table_Fill(String location) {
         DefaultTableModel model_1 = (DefaultTableModel) table_Upcoming.getModel();
+        DefaultTableModel model_2 = (DefaultTableModel) table_YourOrders.getModel();
 
         //Loops through arrays and take data from them and adds to table
         for (int i = 0; i < name_str.length; i++) {
@@ -91,7 +113,22 @@ public class App_main extends javax.swing.JFrame {
         for (int j = 0; j < name_str.length; j++) {
             model_1.setValueAt(location, j, 3);
         }
+
+        //Loops through arrays and adds them to table
+        for (int h = 0; h < total_prices_str.length; h++) {
+            model_2.addRow(new Object[]{receipt_dates_str[h], receipt_nos_str[h], total_prices_str[h]});
+        }
+
         table_Upcoming.setModel(model_1);
+        table_YourOrders.setModel(model_2);
+
+        //Testing
+        System.out.println("Test " + total_prices.get(0));
+        System.out.println("Test " + receipt_dates.get(0));
+        System.out.println(receipt_nos.get(0));
+
+        //Testing Array
+        System.out.println("We MOVE " + total_prices_str[0]);
     }
 
     //Method to split date string using regex
@@ -103,9 +140,9 @@ public class App_main extends javax.swing.JFrame {
     public String split_time(String element) {
         String[] test = element.split("1899-12-30");
         System.out.println(test[0]);
-        
+
         String[] result = test[0].split(".");
-        
+
         for (String x : result) {
             System.out.println(x);
         }
@@ -187,6 +224,7 @@ public class App_main extends javax.swing.JFrame {
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
+                {null, null, null},
                 {null, null, null}
             },
             new String [] {
@@ -249,15 +287,38 @@ public class App_main extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(18, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(previous_play)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(Next_play)
-                                    .addGap(465, 465, 465))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(previous_play)
+                                .addGap(18, 18, 18)
+                                .addComponent(Next_play)
+                                .addGap(465, 465, 465))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(Event_1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(jLabel7)
+                                                .addGap(202, 202, 202))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(jLabel6)
+                                                .addGap(165, 165, 165))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(303, 303, 303)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(15, 15, 15)
+                                    .addComponent(Label_EventName_1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(26, 26, 26)
+                                    .addComponent(Label_8)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(Label_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel4)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(label_Name)
                                     .addGap(292, 292, 292)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -266,29 +327,7 @@ public class App_main extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(jLabel3)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(label_Basket))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(Event_1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                    .addComponent(jLabel7)
-                                                    .addGap(202, 202, 202))
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                    .addComponent(jLabel6)
-                                                    .addGap(165, 165, 165))))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(303, 303, 303)
-                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(0, 0, Short.MAX_VALUE)))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Label_EventName_1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Label_8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Label_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(label_Basket)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -318,7 +357,7 @@ public class App_main extends javax.swing.JFrame {
                     .addComponent(label_Name))
                 .addGap(80, 80, 80)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Label_EventName_1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Label_EventName_1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Label_8)
                     .addComponent(Label_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -346,7 +385,7 @@ public class App_main extends javax.swing.JFrame {
                             .addComponent(Next_play)
                             .addComponent(previous_play)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -364,8 +403,6 @@ public class App_main extends javax.swing.JFrame {
             Label_Date.setText("<html>" + image_date_str[index] + "</html>");
             Label_Price.setText("<html>" + price_str[index] + "</html>");
         }
-        //Only Testing Remove After
-        System.out.println(index);
     }//GEN-LAST:event_Next_playActionPerformed
 
     private void previous_playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previous_playActionPerformed
