@@ -422,7 +422,7 @@ public class App_main extends javax.swing.JFrame {
         SeatingPlan sp = new SeatingPlan();
         sp.return_lbl().setText(Cmb_Order.getSelectedItem().toString()); //Gets selected item from combo box and returns it to seating plan form 
         
-        sp.show();
+       sp.setVisible(true);
     }//GEN-LAST:event_Button_Order_TicketActionPerformed
 
     /**
