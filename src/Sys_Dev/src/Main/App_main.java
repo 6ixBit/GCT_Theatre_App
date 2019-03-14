@@ -64,14 +64,10 @@ public class App_main extends javax.swing.JFrame {
         image_date_str = image_date.toArray(image_date_str);
         price_str = prices.toArray(price_str);
         time_str = times.toArray(time_str);
+        
+       
 
-        //Converts objects from Your Orders table from ArrayList to Array - ERROR STILL SAYS THAT ARRAY IS BLANK EVEN THOUGH ITS BEING CONVERTED
-        for (int i = 0; i < total_prices.size(); i++) {
-            total_prices_str[i] = total_prices.get(i);
-            System.out.println("Bingo " + total_prices_str[i]);
     
-        }
-
         //Calls regex method to split date
         for (int i = 0; i < image_date_str.length; i++) {
             image_date_str[i] = split_date(image_date_str[i]);
@@ -121,14 +117,6 @@ public class App_main extends javax.swing.JFrame {
 
         table_Upcoming.setModel(model_1);
         table_YourOrders.setModel(model_2);
-
-        //Testing
-        System.out.println("Test " + total_prices.get(0));
-        System.out.println("Test " + receipt_dates.get(0));
-        System.out.println(receipt_nos.get(0));
-
-        //Testing Array
-        System.out.println("We MOVE " + total_prices_str[0]);
     }
 
     //Method to split date string using regex
@@ -222,10 +210,7 @@ public class App_main extends javax.swing.JFrame {
 
         table_YourOrders.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Date of order", "Receipt Number", "Price"

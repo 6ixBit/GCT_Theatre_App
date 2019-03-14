@@ -126,11 +126,13 @@ public class Login extends javax.swing.JFrame {
             //Fill Your Orders table here
             Singleton.User_Orders(u1.get_user(), ap.total_prices, ap.receipt_dates, ap.receipt_nos);
 
+            //Converts arraylist to array so it can be read
+            ap.total_prices_str = ap.total_prices.toArray(ap.total_prices_str); //This doesn't work because it occurs upon the loading off the program
+            ap.receipt_dates_str = ap.receipt_dates.toArray(ap.receipt_dates_str);
+            ap.receipt_nos_str = ap.receipt_nos.toArray(ap.receipt_nos_str);
+
             //Fill Upcoming table
             ap.Table_Fill("Greenwich Theatre");
-            System.out.println(u1.get_user());
-            System.out.println(ap.total_prices_str[0]);
-            System.out.println(ap.total_prices_str[1]);
 
 
     }//GEN-LAST:event_Button_loginActionPerformed

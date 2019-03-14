@@ -71,7 +71,6 @@ public class Singleton {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver"); //Loading driver
 
             connect = DriverManager.getConnection("jdbc:ucanaccess://./GCT.accdb"); //String path to database which is the main project source folder
-            System.out.println("Connection to database successfull");
 
             PreparedStatement preparedStatement = connect.prepareStatement("SELECT username,passw FROM User WHERE username=? AND passw=?"); //SQL statement to get data
             preparedStatement.setString(1, user);
