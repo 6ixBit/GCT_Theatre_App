@@ -21,10 +21,12 @@ public class Payment extends javax.swing.JFrame {
 
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        this.setTitle("Payments");
 
         //Load images onto labels
         Label_mastercard.setIcon(new ImageIcon("images/mastercard.png"));
         Label_visa.setIcon(new ImageIcon("images/visa.png"));
+        
 
     }
 
@@ -47,8 +49,8 @@ public class Payment extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        Btn_Payment_next = new javax.swing.JButton();
+        amount_due = new javax.swing.JLabel();
         Label_visa = new javax.swing.JLabel();
         Label_mastercard = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -77,9 +79,14 @@ public class Payment extends javax.swing.JFrame {
 
         jLabel5.setText("Amount due:");
 
-        jButton1.setText("Next");
+        Btn_Payment_next.setText("Next");
+        Btn_Payment_next.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_Payment_nextActionPerformed(evt);
+            }
+        });
 
-        jLabel6.setText("-");
+        amount_due.setText("-");
 
         Label_visa.setText("-");
 
@@ -115,13 +122,11 @@ public class Payment extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel6)
+                                        .addComponent(amount_due)
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jLabel3))
+                                            .addComponent(jLabel3)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -129,13 +134,13 @@ public class Payment extends javax.swing.JFrame {
                                         .addGap(62, 62, 62))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(Label_visa, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                                 .addComponent(jLabel1)
                                 .addGap(47, 47, 47)
                                 .addComponent(Label_mastercard, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(Btn_Payment_next)))
                 .addGap(18, 18, 18))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(429, 429, 429)
@@ -166,9 +171,9 @@ public class Payment extends javax.swing.JFrame {
                         .addGap(47, 47, 47)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel6))
+                            .addComponent(amount_due))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(Btn_Payment_next)
                         .addGap(14, 14, 14))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
@@ -185,7 +190,7 @@ public class Payment extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,6 +206,16 @@ public class Payment extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void Btn_Payment_nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Payment_nextActionPerformed
+        Shipping sh = new Shipping();
+        
+        //Hide the payment form
+        this.hide();
+        
+        //Show shipping form
+        sh.show();
+    }//GEN-LAST:event_Btn_Payment_nextActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,9 +253,10 @@ public class Payment extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Btn_Payment_next;
     private javax.swing.JLabel Label_mastercard;
     private javax.swing.JLabel Label_visa;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel amount_due;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
@@ -248,7 +264,6 @@ public class Payment extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;

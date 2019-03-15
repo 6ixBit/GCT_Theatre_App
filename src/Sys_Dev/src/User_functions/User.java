@@ -55,6 +55,8 @@ public class User extends Home {
     public void set_email(String email) {
         this.e_mail = email;
     }
+    
+  
 
     @Override
     public void clear() {

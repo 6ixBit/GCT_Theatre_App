@@ -23,6 +23,7 @@ abstract public class Home {
     //Protected vars for Receipt class
     protected int receipt_no;
     protected String receipt_date;
+    protected double shipping_method;
     
     
     //protected var for discounts

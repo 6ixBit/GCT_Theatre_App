@@ -2,6 +2,7 @@ package Main;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -9,13 +10,14 @@ import javax.swing.JLabel;
  */
 public class SeatingPlan extends javax.swing.JFrame {
 
-    /**
-     * Creates new form SeatingPlan
-     */
+   
+    boolean selected = false;
+    
     public SeatingPlan() {
         initComponents();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        this.setTitle("Seat Selector");
         
         //Assigning each radiobutton a string so that they can be referred to
         Seat_A1.setActionCommand("A1");
@@ -325,10 +327,50 @@ public class SeatingPlan extends javax.swing.JFrame {
 
     private void Button_confirm_seatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_confirm_seatActionPerformed
         Payment pu = new Payment();
-        System.out.println(buttonGroup1.getSelection().getActionCommand().toString());
-        
-        this.hide(); //Hide form once seat has been selected
-        pu.show();
+
+        //Validation checks
+        if (Seat_A1.isSelected()) {
+            selected = true; //Change boolean to true
+        } else if (Seat_A2.isSelected()) {
+            selected = true;
+        } else if (Seat_A3.isSelected()) {
+            selected = true;
+        } else if (Seat_A4.isSelected()) {
+            selected = true;
+        } else if (Seat_B1.isSelected()) {
+            selected = true;
+        } else if (Seat_B2.isSelected()){
+            selected = true;
+        } else if (Seat_B3.isSelected()) {
+            selected = true;
+        } else if (Seat_B4.isSelected()) {
+            selected = true;
+        } else if (Seat_C1.isSelected()) {
+            selected = true;
+        } else if (Seat_C2.isSelected()) {
+            selected = true;   
+        } else if (Seat_C3.isSelected()) {
+            selected = true;
+        } else if (Seat_C4.isSelected()) {
+            selected = true;
+        } else if (Seat_D1.isSelected()){
+            selected = true;
+        } else if (Seat_D2.isSelected()) {
+            selected = true;
+        } else if (Seat_D3.isSelected()) {
+            selected = true;
+        } else if (Seat_D4.isSelected()) {
+            selected = true;
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a seat");
+        }
+
+        if (selected == true) {
+            //GUI functionality
+            this.hide(); //Hide form once seat has been selected
+            pu.show(); //Show payment form
+
+        }
     }//GEN-LAST:event_Button_confirm_seatActionPerformed
 
     /**

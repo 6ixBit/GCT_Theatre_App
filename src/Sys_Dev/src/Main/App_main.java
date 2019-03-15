@@ -55,6 +55,7 @@ public class App_main extends javax.swing.JFrame {
     public App_main() {
         initComponents();
         this.setResizable(false);
+        this.setLocationRelativeTo(null);
 
         //Calling method to query DB for images
         Singleton.Event_Images(images, image_desc, image_date, name, prices, times);
