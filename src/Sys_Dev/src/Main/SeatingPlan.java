@@ -14,9 +14,29 @@ public class SeatingPlan extends javax.swing.JFrame {
      */
     public SeatingPlan() {
         initComponents();
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        
+        //Assigning each radiobutton a string so that they can be referred to
+        Seat_A1.setActionCommand("A1");
+        Seat_A2.setActionCommand("A2");
+        Seat_A3.setActionCommand("A3");
+        Seat_A4.setActionCommand("A4");
 
-        //A1_Label.setIcon(new ImageIcon("images/blue_chair.png"));
-        //A2_Label.setIcon(new ImageIcon("images/blue_chair.png"));
+        Seat_B1.setActionCommand("B1");
+        Seat_B2.setActionCommand("B2");
+        Seat_B3.setActionCommand("B3");
+        Seat_B4.setActionCommand("B4");
+
+        Seat_C1.setActionCommand("C1");
+        Seat_C2.setActionCommand("C2");
+        Seat_C3.setActionCommand("C3");
+        Seat_C4.setActionCommand("C4");
+
+        Seat_D1.setActionCommand("D1");
+        Seat_D2.setActionCommand("D2");
+        Seat_D3.setActionCommand("D3");
+        Seat_D4.setActionCommand("D4");
     }
 
     public JLabel return_lbl() { //Return this label object to other classes.
@@ -51,7 +71,7 @@ public class SeatingPlan extends javax.swing.JFrame {
         Seat_D1 = new javax.swing.JRadioButton();
         Seat_D2 = new javax.swing.JRadioButton();
         Seat_D3 = new javax.swing.JRadioButton();
-        jRadioButton16 = new javax.swing.JRadioButton();
+        Seat_D4 = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -65,8 +85,6 @@ public class SeatingPlan extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JSeparator();
         jLabel11 = new javax.swing.JLabel();
         Label_event = new javax.swing.JLabel();
-        A1_Label = new javax.swing.JLabel();
-        A2_Label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,6 +92,11 @@ public class SeatingPlan extends javax.swing.JFrame {
         jLabel1.setText("Please Select a Seat:-");
 
         Button_confirm_seat.setText("Confirm");
+        Button_confirm_seat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_confirm_seatActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(Seat_A1);
         Seat_A1.setText("A1");
@@ -120,8 +143,8 @@ public class SeatingPlan extends javax.swing.JFrame {
         buttonGroup1.add(Seat_D3);
         Seat_D3.setText("D3");
 
-        buttonGroup1.add(jRadioButton16);
-        jRadioButton16.setText("D4");
+        buttonGroup1.add(Seat_D4);
+        Seat_D4.setText("D4");
 
         jLabel2.setText("A");
 
@@ -146,10 +169,6 @@ public class SeatingPlan extends javax.swing.JFrame {
 
         Label_event.setText("-");
 
-        A1_Label.setText("-");
-
-        A2_Label.setText("-");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -167,16 +186,12 @@ public class SeatingPlan extends javax.swing.JFrame {
                         .addGap(116, 116, 116)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(A1_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Seat_A1)
-                                    .addComponent(Seat_B1)
-                                    .addComponent(Seat_C1)
-                                    .addComponent(Seat_D1))
-                                .addGap(167, 167, 167)
-                                .addComponent(A2_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(Seat_A1)
+                                .addComponent(Seat_B1)
+                                .addComponent(Seat_C1)
+                                .addComponent(Seat_D1)))
+                        .addGap(214, 214, 214)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
@@ -187,9 +202,9 @@ public class SeatingPlan extends javax.swing.JFrame {
                                         .addComponent(jLabel9))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(Seat_B3)
-                                        .addComponent(Seat_A4)
                                         .addComponent(Seat_C3)
-                                        .addComponent(Seat_D3)))
+                                        .addComponent(Seat_D3)
+                                        .addComponent(Seat_A3)))
                                 .addGap(167, 167, 167))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
@@ -200,8 +215,8 @@ public class SeatingPlan extends javax.swing.JFrame {
                                 .addGap(351, 351, 351)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(Seat_B4)
-                                    .addComponent(Seat_A3)
-                                    .addComponent(Seat_C4))
+                                    .addComponent(Seat_C4)
+                                    .addComponent(Seat_A4))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(32, 32, 32))
                     .addGroup(layout.createSequentialGroup()
@@ -233,7 +248,7 @@ public class SeatingPlan extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jRadioButton16)
+                            .addComponent(Seat_D4)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(178, 178, 178))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -263,48 +278,41 @@ public class SeatingPlan extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8)
                         .addComponent(jLabel9)))
+                .addGap(67, 67, 67)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Seat_A2)
+                    .addComponent(Seat_A4)
+                    .addComponent(Seat_A1)
+                    .addComponent(jLabel2)
+                    .addComponent(Seat_A3))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
+                        .addGap(62, 62, 62)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Seat_A2)
-                            .addComponent(Seat_A3)
-                            .addComponent(Seat_A4)
-                            .addComponent(Seat_A1)
-                            .addComponent(jLabel2))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(62, 62, 62)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(Seat_B1)
-                                    .addComponent(Seat_B2)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(71, 71, 71)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(Seat_B3)
-                                    .addComponent(Seat_B4))))
-                        .addGap(65, 65, 65)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Seat_C2)
-                            .addComponent(Seat_C1)
-                            .addComponent(Seat_C3)
-                            .addComponent(Seat_C4)
-                            .addComponent(jLabel4))
-                        .addGap(69, 69, 69)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel5)
-                                .addComponent(Seat_D1)
-                                .addComponent(Seat_D2))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jRadioButton16)
-                                .addComponent(Seat_D3))))
+                            .addComponent(jLabel3)
+                            .addComponent(Seat_B1)
+                            .addComponent(Seat_B2)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(71, 71, 71)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(A1_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(A2_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(Seat_B3)
+                            .addComponent(Seat_B4))))
+                .addGap(65, 65, 65)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Seat_C2)
+                    .addComponent(Seat_C1)
+                    .addComponent(Seat_C3)
+                    .addComponent(Seat_C4)
+                    .addComponent(jLabel4))
+                .addGap(69, 69, 69)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(Seat_D1)
+                        .addComponent(Seat_D2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Seat_D4)
+                        .addComponent(Seat_D3)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -314,6 +322,14 @@ public class SeatingPlan extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void Button_confirm_seatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_confirm_seatActionPerformed
+        Payment pu = new Payment();
+        System.out.println(buttonGroup1.getSelection().getActionCommand().toString());
+        
+        this.hide(); //Hide form once seat has been selected
+        pu.show();
+    }//GEN-LAST:event_Button_confirm_seatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -351,8 +367,6 @@ public class SeatingPlan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel A1_Label;
-    private javax.swing.JLabel A2_Label;
     private javax.swing.JButton Button_confirm_seat;
     private javax.swing.JLabel Label_event;
     private javax.swing.JRadioButton Seat_A1;
@@ -370,6 +384,7 @@ public class SeatingPlan extends javax.swing.JFrame {
     private javax.swing.JRadioButton Seat_D1;
     private javax.swing.JRadioButton Seat_D2;
     private javax.swing.JRadioButton Seat_D3;
+    private javax.swing.JRadioButton Seat_D4;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -382,7 +397,6 @@ public class SeatingPlan extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JRadioButton jRadioButton16;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator4;

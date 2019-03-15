@@ -18,11 +18,14 @@ public class Payment extends javax.swing.JFrame {
      */
     public Payment() {
         initComponents();
-        
+
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+
         //Load images onto labels
         Label_mastercard.setIcon(new ImageIcon("images/mastercard.png"));
         Label_visa.setIcon(new ImageIcon("images/visa.png"));
-        
+
     }
 
     /**
