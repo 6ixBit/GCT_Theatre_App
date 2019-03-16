@@ -19,7 +19,7 @@ public class Shipping extends javax.swing.JFrame {
     boolean selected = false;
     String status_msg;
     double shipping_price;
-    
+
     //One object to reference receipt class
     Receipt re = new Receipt();
 
@@ -133,15 +133,15 @@ public class Shipping extends javax.swing.JFrame {
 
         if (Btn_Standard.isSelected()) {
             selected = true;
-            status_msg = "Your order will be there in 3 to 5 days";
+            status_msg = "Your order will be there in 3 to 5 days. " + "\n" + re.get_total_price() + " was charged on your account.";
             shipping_price = 1.00; //Sets price fo shipping method
         } else if (Btn_Express.isSelected()) {
             selected = true;
-            status_msg = "Your order will be there in 1 to 3 days";
+            status_msg = "Your order will be there in 1 to 3 days. " + "\n" + re.get_total_price() + " was charged on your account.";
             shipping_price = 3.00;
         } else if (Btn_one_day.isSelected()) {
             selected = true;
-            status_msg = "Your order will be there within a day";
+            status_msg = "Your order will be there within a day. " + "\n" + re.get_total_price() + " was charged on your account.";
             shipping_price = 4.99;
         } else {
             JOptionPane.showMessageDialog(null, "Please select a shipping method", "Error", JOptionPane.ERROR_MESSAGE);
@@ -149,22 +149,12 @@ public class Shipping extends javax.swing.JFrame {
 
         if (selected == true) {
             JOptionPane.showMessageDialog(null, status_msg, "Thank you!", JOptionPane.PLAIN_MESSAGE);
-            this.hide();
+            this.hide(); //If user selects a shipping method then close shipping JFrame
 
-            
-            re.set_shipping_method(shipping_price); //Sets price of shipping method upon user selection
-
-            System.out.println(re.get_shipping_method());
+            re.add_total_price(shipping_price); //Increment total price by shipping method
         }
-
     }//GEN-LAST:event_Btn_CompleteActionPerformed
 
-    public void add_shipping_to_total(){
-        
-      //  re.set_total_price() += shipping_price;
-        
-    }
-    
     /**
      * @param args the command line arguments
      */

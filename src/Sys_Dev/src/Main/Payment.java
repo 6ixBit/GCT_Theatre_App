@@ -26,7 +26,6 @@ public class Payment extends javax.swing.JFrame {
         //Load images onto labels
         Label_mastercard.setIcon(new ImageIcon("images/mastercard.png"));
         Label_visa.setIcon(new ImageIcon("images/visa.png"));
-        
 
     }
 

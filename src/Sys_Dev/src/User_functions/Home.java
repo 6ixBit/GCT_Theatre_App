@@ -21,7 +21,7 @@ abstract public class Home {
     protected double total_price;
     
     //Protected vars for Receipt class
-    protected int receipt_no;
+    protected String receipt_no;
     protected String receipt_date;
     protected double shipping_method;
     
@@ -47,7 +47,7 @@ abstract public class Home {
     }
    
     //Constructor for receipt
-    public Home(int receipt_no, String receipt_date){
+    public Home(String receipt_no, String receipt_date){
         this.receipt_no = receipt_no;
         this.receipt_date = receipt_date;
     }

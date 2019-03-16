@@ -7,10 +7,11 @@ import java.util.ArrayList;
 import User_functions.*;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import javax.swing.table.DefaultTableModel;
 
-public class App_main extends javax.swing.JFrame {
+public class App_main extends javax.swing.JFrame implements Runnable{
 
     //This will be used by all the lists to determine what part of the slide show gets shown to the user.
     private int index = 0;
@@ -51,6 +52,11 @@ public class App_main extends javax.swing.JFrame {
     //List of total_price
     public ArrayList<String> total_prices = new ArrayList<>();
     public String[] total_prices_str = new String[total_prices.size()];
+    
+    //
+    String label_res;
+    double tick_price = 0;
+     
 
     public App_main() {
         initComponents();
@@ -88,6 +94,7 @@ public class App_main extends javax.swing.JFrame {
         Label_Date.setText("<html>" + image_date_str[index] + "</html>");
         Label_Price.setText("<html>" + price_str[index] + "</html>");
 
+     
     }
 
     public JLabel get_Label_Name() {
@@ -164,6 +171,8 @@ public class App_main extends javax.swing.JFrame {
         Button_Order_Ticket = new javax.swing.JButton();
         Cmb_Order = new javax.swing.JComboBox();
         jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        Btn_Checkout = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -264,7 +273,7 @@ public class App_main extends javax.swing.JFrame {
 
         jLabel8.setText("£");
 
-        Button_Order_Ticket.setText("Order ticket");
+        Button_Order_Ticket.setText("Add to cart");
         Button_Order_Ticket.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_Order_TicketActionPerformed(evt);
@@ -272,6 +281,16 @@ public class App_main extends javax.swing.JFrame {
         });
 
         jLabel9.setText("Please select an event you'd like to go to; ");
+
+        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel10.setText("Purchase");
+
+        Btn_Checkout.setText("Checkout");
+        Btn_Checkout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_CheckoutActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -337,7 +356,14 @@ public class App_main extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(Button_Order_Ticket)
                                     .addComponent(Cmb_Order, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(147, 147, 147))))))
+                                .addGap(147, 147, 147))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addGap(198, 198, 198))))))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Btn_Checkout)
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,7 +376,9 @@ public class App_main extends javax.swing.JFrame {
                     .addComponent(label_Basket)
                     .addComponent(jLabel4)
                     .addComponent(label_Name))
-                .addGap(80, 80, 80)
+                .addGap(18, 18, 18)
+                .addComponent(Btn_Checkout)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Label_EventName_1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Label_8)
@@ -376,6 +404,8 @@ public class App_main extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel10)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Cmb_Order, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9))
@@ -419,18 +449,62 @@ public class App_main extends javax.swing.JFrame {
     }//GEN-LAST:event_previous_playActionPerformed
 
     private void Button_Order_TicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_Order_TicketActionPerformed
-        // TODO add your handling code here:
-        SeatingPlan sp = new SeatingPlan();
-        sp.return_lbl().setText(Cmb_Order.getSelectedItem().toString()); //Gets selected item from combo box and returns it to seating plan form 
         
-       sp.setVisible(true);
+        SeatingPlan sp = new SeatingPlan();
+        Ticket te = new Ticket(); //To access ticket class to set ticket price 
+
+        sp.return_lbl().setText(Cmb_Order.getSelectedItem().toString()); //Gets selected item from combo box and returns it to seating plan form 
+        sp.setVisible(true);
+        
+        double ans = 0;
+
+        for (String x : name_str) { //Loop through names
+            if (x == Cmb_Order.getSelectedItem().toString()) {
+                int i = Cmb_Order.getSelectedIndex();
+                ans = Double.parseDouble(price_str[i]); //Convert string value from prices array to double
+
+                te.set_ticket_price(ans);
+            }
+        }
+        //Global var to be used by run method
+        tick_price = ans;
+        
+        //String casting
+        label_res = Double.toString(ans);
+        
+        //Label Object
+        label_Basket.setText(label_res);    
+        System.out.println("tick tick "+ te.get_ticket_price());
     }//GEN-LAST:event_Button_Order_TicketActionPerformed
+
+    private void Btn_CheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_CheckoutActionPerformed
+        // TODO add your handling code here:
+
+        Ticket te = new Ticket();
+        Payment py = new Payment();
+        System.out.println(te.get_ticket_price());
+
+        if (te.get_ticket_price() == 0.0) {
+            JOptionPane.showMessageDialog(null, "Sorry you have no items in your basket", "Stop", JOptionPane.ERROR_MESSAGE);
+        } else {
+
+            py.show(); //Bring up payment page
+        }
+
+    }//GEN-LAST:event_Btn_CheckoutActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
 
+            //Creating thread object
+        Runnable r1 = new App_main();
+        Thread t1 = new Thread(r1);
+        //Start thread
+        t1.start();
+        
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -463,6 +537,7 @@ public class App_main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton Btn_Checkout;
     private javax.swing.JButton Button_Order_Ticket;
     private javax.swing.JComboBox Cmb_Order;
     private javax.swing.JLabel Event_1;
@@ -473,6 +548,7 @@ public class App_main extends javax.swing.JFrame {
     private javax.swing.JLabel Label_Price;
     private javax.swing.JButton Next_play;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -489,4 +565,24 @@ public class App_main extends javax.swing.JFrame {
     private javax.swing.JTable table_Upcoming;
     private javax.swing.JTable table_YourOrders;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        //System.out.println("Starting shopping basket thread");
+        //SeatingPlan sp = new SeatingPlan();
+        //Ticket te = new Ticket();
+
+        //Initialising label
+        //label_Basket = new JLabel(label_res);
+        //while (true) {
+          //  if (sp.confirmed == true){
+                
+            //} else { //If order is not confirmed
+              //  te.dec_ticket_price(tick_price);
+                //System.out.println("Wrong mate " + te.get_ticket_price());
+               // /label_Basket.setText(label_res); 
+            //}
+
+        //}
+    }
 }
