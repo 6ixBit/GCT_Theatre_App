@@ -16,6 +16,7 @@ abstract public class Home {
     protected String event_name;
     protected String event_date;
     protected double ticket_price;
+    protected String seat_no;
     
     //Protected var for multiple tickets which should equal to a total price
     protected double total_price;

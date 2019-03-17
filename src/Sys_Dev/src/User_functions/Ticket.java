@@ -1,9 +1,17 @@
 package User_functions;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Ticket extends Home {
 
+    //List to hold list of ticket numbers incase user wants multiple tickets
+    public ArrayList <Integer> list_of_tickNo = new ArrayList<>();
+    
+    //ArrayList to hold lis of seats incase user wants to book multiple tickets
+    public ArrayList <String> list_of_Seats = new ArrayList<>();
+    
+    
     public int get_ticket_no() {
         return ticket_no;
     }
@@ -37,19 +45,32 @@ public class Ticket extends Home {
 
     }
     
+     public void inc_ticket_price(double amount) {
+        this.ticket_price += amount;
+    }
+    
     public void dec_ticket_price(double amount) {
         this.ticket_price -= amount;
     }
     
-    public String generate_ticket() {
+    public String get_seat_no(){
+     return seat_no;   
+    }
+    
+    public void set_seat_no(String seat){
+        this.seat_no = seat;
+    }
+    
+    public int generate_ticket() {
 
         Random rand = new Random();
 
         int n = rand.nextInt(16) + 1; //Generate a random ticket number between 1 & 16 - There are 16 tickets in the cinema seating hall
 
+        //Get rid of if you dont need later
         String result = Integer.toString(n);
 
-        return result;
+        return n;
     }
     
     @Override

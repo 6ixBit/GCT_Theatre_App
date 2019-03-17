@@ -5,28 +5,35 @@
  */
 package Main;
 
+import User_functions.Ticket;
 import javax.swing.ImageIcon;
 
 /**
  *
  * @author The Emperor
  */
-public class Payment extends javax.swing.JFrame {
+public class Payment extends javax.swing.JFrame implements IF_tick {
 
-    /**
-     * Creates new form Payment
-     */
+    
+    String label_amount;
+    
     public Payment() {
         initComponents();
 
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("Payments");
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         //Load images onto labels
         Label_mastercard.setIcon(new ImageIcon("images/mastercard.png"));
         Label_visa.setIcon(new ImageIcon("images/visa.png"));
 
+        //Set value of label to show price of users current basket/tickets
+        label_amount = Double.toString(te.get_ticket_price());
+        amount_due.setText(label_amount);
+        
+        
     }
 
     /**

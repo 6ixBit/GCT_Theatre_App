@@ -39,6 +39,10 @@ public class Receipt extends Home {
     public void add_total_price(double amount) {
         this.total_price += amount;
     }
+    
+    public void dec_total_price(double amount) {
+        this.total_price -= amount;
+    }
 
     public String generate_receipt() {
 

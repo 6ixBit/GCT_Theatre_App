@@ -1,5 +1,6 @@
 package Main;
 
+import User_functions.Ticket;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -13,6 +14,9 @@ public class SeatingPlan extends javax.swing.JFrame {
    
     boolean selected = false;
     boolean confirmed = false;
+    
+    //Creating object to access ticket class
+    Ticket te = new Ticket();
     
     public SeatingPlan() {
         initComponents();
@@ -328,10 +332,7 @@ public class SeatingPlan extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Button_confirm_seatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_confirm_seatActionPerformed
-        Payment pu = new Payment();
         
-        
-
         //Validation checks
         if (Seat_A1.isSelected()) {
             selected = true; //Change boolean to true
@@ -374,7 +375,19 @@ public class SeatingPlan extends javax.swing.JFrame {
             this.hide(); //Hide form once seat has been selected
             JOptionPane.showMessageDialog(null, "Your order has been added to your shopping basket");
             confirmed = true;
-
+            
+            //Sets the seat number for the specific ticket
+            te.set_seat_no(buttonGroup1.getSelection().getActionCommand());
+            te.list_of_Seats.add(te.get_seat_no()); //Adds current seat number object to list
+            
+            
+            te.set_ticket_no(te.generate_ticket()); //Generates ticket number
+            te.list_of_tickNo.add(te.get_ticket_no()); //Adds current ticket number object to list
+            
+            System.out.println(te.list_of_Seats.get(0));
+            System.out.println(te.list_of_tickNo.get(0));
+            
+            
         }
     }//GEN-LAST:event_Button_confirm_seatActionPerformed
 

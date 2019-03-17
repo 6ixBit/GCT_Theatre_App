@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 import javax.swing.table.DefaultTableModel;
 
-public class App_main extends javax.swing.JFrame implements Runnable{
+public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
 
     //This will be used by all the lists to determine what part of the slide show gets shown to the user.
     private int index = 0;
@@ -57,6 +57,8 @@ public class App_main extends javax.swing.JFrame implements Runnable{
     String label_res;
     double tick_price = 0;
      
+    //Objects for ticket class
+     SeatingPlan sp = new SeatingPlan();
 
     public App_main() {
         initComponents();
@@ -107,7 +109,7 @@ public class App_main extends javax.swing.JFrame implements Runnable{
 
         //Loops through arrays and take data from them and adds to table
         for (int i = 0; i < name_str.length; i++) {
-            model_1.addRow(new Object[]{name_str[i], time_str[i], image_date_str[i]});
+            model_1.addRow(new Object[]{name_str[i], price_str[i], image_date_str[i]});
         }
 
         //Set every column (3) to the location specified in method call, I done this as I assume GCT is the primary location for events and it allows for flexiblity if need be to change 
@@ -246,7 +248,7 @@ public class App_main extends javax.swing.JFrame implements Runnable{
 
             },
             new String [] {
-                "TItle", "Time", "Date", "Location"
+                "TItle", "Price (£)", "Date", "Location"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -298,12 +300,12 @@ public class App_main extends javax.swing.JFrame implements Runnable{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_Name)
-                        .addGap(292, 292, 292)
+                        .addGap(300, 300, 300)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(273, 273, 273)
                         .addComponent(jLabel2)
@@ -311,18 +313,8 @@ public class App_main extends javax.swing.JFrame implements Runnable{
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(label_Basket)
-                        .addGap(0, 18, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(Label_EventName_1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(Label_8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Label_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel7)
-                        .addGap(181, 181, 181))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 10, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Event_1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
@@ -343,13 +335,9 @@ public class App_main extends javax.swing.JFrame implements Runnable{
                                     .addComponent(Label_Event_1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addGap(169, 169, 169))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -359,7 +347,22 @@ public class App_main extends javax.swing.JFrame implements Runnable{
                                 .addGap(147, 147, 147))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel10)
-                                .addGap(198, 198, 198))))))
+                                .addGap(198, 198, 198))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addContainerGap())))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(Label_EventName_1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(Label_8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Label_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7)
+                        .addGap(199, 199, 199))))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Btn_Checkout)
@@ -449,13 +452,10 @@ public class App_main extends javax.swing.JFrame implements Runnable{
     }//GEN-LAST:event_previous_playActionPerformed
 
     private void Button_Order_TicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_Order_TicketActionPerformed
-        
-        SeatingPlan sp = new SeatingPlan();
-        Ticket te = new Ticket(); //To access ticket class to set ticket price 
 
         sp.return_lbl().setText(Cmb_Order.getSelectedItem().toString()); //Gets selected item from combo box and returns it to seating plan form 
         sp.setVisible(true);
-        
+
         double ans = 0;
 
         for (String x : name_str) { //Loop through names
@@ -463,24 +463,20 @@ public class App_main extends javax.swing.JFrame implements Runnable{
                 int i = Cmb_Order.getSelectedIndex();
                 ans = Double.parseDouble(price_str[i]); //Convert string value from prices array to double
 
-                te.set_ticket_price(ans);
+                te.inc_ticket_price(ans); //Add current ticket price to basket
             }
         }
-        //Global var to be used by run method
-        tick_price = ans;
-        
+
         //String casting
-        label_res = Double.toString(ans);
-        
+        label_res = Double.toString(te.get_ticket_price()); //Assign variable the value of ticket prices so it can be converted to a string and used by a label
+
         //Label Object
-        label_Basket.setText(label_res);    
-        System.out.println("tick tick "+ te.get_ticket_price());
+        label_Basket.setText(label_res);
     }//GEN-LAST:event_Button_Order_TicketActionPerformed
 
     private void Btn_CheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_CheckoutActionPerformed
         // TODO add your handling code here:
 
-        Ticket te = new Ticket();
         Payment py = new Payment();
         System.out.println(te.get_ticket_price());
 
