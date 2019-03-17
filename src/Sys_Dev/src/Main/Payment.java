@@ -7,6 +7,7 @@ package Main;
 
 import User_functions.Ticket;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,8 +15,9 @@ import javax.swing.ImageIcon;
  */
 public class Payment extends javax.swing.JFrame implements IF_tick {
 
-    
+    Shipping sh = new Shipping();
     String label_amount;
+    
     
     public Payment() {
         initComponents();
@@ -48,12 +50,12 @@ public class Payment extends javax.swing.JFrame implements IF_tick {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        textfield_card = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
         jComboBox2 = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        textField_csc = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         Btn_Payment_next = new javax.swing.JButton();
         amount_due = new javax.swing.JLabel();
@@ -77,12 +79,13 @@ public class Payment extends javax.swing.JFrame implements IF_tick {
 
         jLabel4.setText("Security code");
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        textField_csc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                textField_cscActionPerformed(evt);
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setText("Amount due:");
 
         Btn_Payment_next.setText("Next");
@@ -92,6 +95,7 @@ public class Payment extends javax.swing.JFrame implements IF_tick {
             }
         });
 
+        amount_due.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         amount_due.setText("-");
 
         Label_visa.setText("-");
@@ -117,10 +121,10 @@ public class Payment extends javax.swing.JFrame implements IF_tick {
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel2)
                                             .addComponent(jLabel4)
-                                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(textField_csc, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(164, 164, 164))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(textfield_card, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel7)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
@@ -167,7 +171,7 @@ public class Payment extends javax.swing.JFrame implements IF_tick {
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textfield_card, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
@@ -185,7 +189,7 @@ public class Payment extends javax.swing.JFrame implements IF_tick {
                         .addGap(12, 12, 12)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(textField_csc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -209,18 +213,29 @@ public class Payment extends javax.swing.JFrame implements IF_tick {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void textField_cscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField_cscActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_textField_cscActionPerformed
 
     private void Btn_Payment_nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Payment_nextActionPerformed
-        Shipping sh = new Shipping();
-        
-        //Hide the payment form
-        this.hide();
-        
-        //Show shipping form
-        sh.show();
+
+        if (textfield_card.getText() == null || textfield_card.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter your card number", "Stop", JOptionPane.ERROR_MESSAGE);
+        } else if (textField_csc.getText() == null || textField_csc.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter your security code", "Stop", JOptionPane.ERROR_MESSAGE);
+        } else {
+            //Hide the payment form
+            this.hide();
+
+            //Show shipping form
+            sh.show();
+            
+            //Set total of ticket price to that of Receipt
+            re.set_total_price(te.get_ticket_price());
+            
+        }
+
+
     }//GEN-LAST:event_Btn_Payment_nextActionPerformed
 
     /**
@@ -273,7 +288,7 @@ public class Payment extends javax.swing.JFrame implements IF_tick {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField textField_csc;
+    private javax.swing.JTextField textfield_card;
     // End of variables declaration//GEN-END:variables
 }

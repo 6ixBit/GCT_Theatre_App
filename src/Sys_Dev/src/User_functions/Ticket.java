@@ -79,6 +79,8 @@ public class Ticket extends Home {
         this.event_name = "";
         this.ticket_no = 0;
         this.ticket_price = 0;
+        this.seat_no = "";
+        this.list_of_Seats.clear();
+        this.list_of_tickNo.clear();
     }
-
 }

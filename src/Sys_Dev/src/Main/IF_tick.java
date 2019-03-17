@@ -5,6 +5,7 @@
  */
 package Main;
 
+import User_functions.Receipt;
 import User_functions.Ticket;
 
 /**
@@ -14,5 +15,6 @@ import User_functions.Ticket;
 public interface IF_tick {
     //Interface that can be utilised by classes so that they can share one object
     Ticket te = new Ticket();
+    Receipt re = new Receipt();
     
 }

@@ -14,14 +14,14 @@ import javax.swing.JOptionPane;
  *
  * @author The Emperor
  */
-public class Shipping extends javax.swing.JFrame {
+public class Shipping extends javax.swing.JFrame implements IF_tick {
 
     boolean selected = false;
     String status_msg;
     double shipping_price;
 
-    //One object to reference receipt class
-    Receipt re = new Receipt();
+   
+   
 
     public Shipping() {
         initComponents();
@@ -152,6 +152,7 @@ public class Shipping extends javax.swing.JFrame {
             this.hide(); //If user selects a shipping method then close shipping JFrame
 
             re.add_total_price(shipping_price); //Increment total price by shipping method
+            System.out.println("Receipt: "+re.get_total_price());
         }
     }//GEN-LAST:event_Btn_CompleteActionPerformed
 
