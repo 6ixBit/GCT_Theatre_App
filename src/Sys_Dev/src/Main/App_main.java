@@ -59,6 +59,10 @@ public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
      
     //Objects for ticket class
      SeatingPlan sp = new SeatingPlan();
+     
+     //variable to store event id
+     int ev_id;
+     
 
     public App_main() {
         initComponents();
@@ -453,6 +457,7 @@ public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
 
     private void Button_Order_TicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_Order_TicketActionPerformed
 
+        sh.purchase_complete = false;
         sp.return_lbl().setText(Cmb_Order.getSelectedItem().toString()); //Gets selected item from combo box and returns it to seating plan form 
         sp.setVisible(true);
 
@@ -462,11 +467,17 @@ public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
             if (x == Cmb_Order.getSelectedItem().toString()) {
                 int i = Cmb_Order.getSelectedIndex();
                 ans = Double.parseDouble(price_str[i]); //Convert string value from prices array to double
+              
 
                 te.inc_ticket_price(ans); //Add current ticket price to basket
             }
         }
 
+        //Get selected index of selected item from user
+        int x = Cmb_Order.getSelectedIndex();
+        ev_id = (x+1);
+         te.set_event_id(ev_id);
+        
         //String casting
         label_res = Double.toString(te.get_ticket_price()); //Assign variable the value of ticket prices so it can be converted to a string and used by a label
 
@@ -474,6 +485,10 @@ public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
         label_Basket.setText(label_res);
     }//GEN-LAST:event_Button_Order_TicketActionPerformed
 
+    public JLabel get_label_basket(){
+        return label_Basket;
+    }
+    
     private void Btn_CheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_CheckoutActionPerformed
         // TODO add your handling code here:
 
@@ -485,6 +500,7 @@ public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
         } else {
 
             py.show(); //Bring up payment page
+            System.out.println("Your username is "+ u1.get_user());
         }
 
     }//GEN-LAST:event_Btn_CheckoutActionPerformed
@@ -555,7 +571,7 @@ public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel label_Basket;
+    public javax.swing.JLabel label_Basket;
     private javax.swing.JLabel label_Name;
     private javax.swing.JButton previous_play;
     private javax.swing.JTable table_Upcoming;
@@ -564,21 +580,11 @@ public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
 
     @Override
     public void run() {
-        //System.out.println("Starting shopping basket thread");
-        //SeatingPlan sp = new SeatingPlan();
-        //Ticket te = new Ticket();
+        System.out.println("Starting shopping basket thread");
 
-        //Initialising label
-        //label_Basket = new JLabel(label_res);
-        //while (true) {
-          //  if (sp.confirmed == true){
-                
-            //} else { //If order is not confirmed
-              //  te.dec_ticket_price(tick_price);
-                //System.out.println("Wrong mate " + te.get_ticket_price());
-               // /label_Basket.setText(label_res); 
-            //}
+        if (sh.purchase_complete == true) {
+            label_Basket.setText("0.0");
+        }
 
-        //}
     }
 }

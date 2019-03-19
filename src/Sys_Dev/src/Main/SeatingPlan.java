@@ -1,5 +1,6 @@
 package Main;
 
+import Database.Singleton;
 import User_functions.Ticket;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -9,14 +10,13 @@ import javax.swing.JOptionPane;
  *
  * @author The Emperor
  */
-public class SeatingPlan extends javax.swing.JFrame {
+public class SeatingPlan extends javax.swing.JFrame implements IF_tick {
 
    
     boolean selected = false;
     boolean confirmed = false;
     
-    //Creating object to access ticket class
-    Ticket te = new Ticket();
+
     
     public SeatingPlan() {
         initComponents();
@@ -375,19 +375,17 @@ public class SeatingPlan extends javax.swing.JFrame {
             this.hide(); //Hide form once seat has been selected
             JOptionPane.showMessageDialog(null, "Your order has been added to your shopping basket");
             confirmed = true;
-            
+
             //Sets the seat number for the specific ticket
             te.set_seat_no(buttonGroup1.getSelection().getActionCommand());
             te.list_of_Seats.add(te.get_seat_no()); //Adds current seat number object to list
-            
-            
+
             te.set_ticket_no(te.generate_ticket()); //Generates ticket number
             te.list_of_tickNo.add(te.get_ticket_no()); //Adds current ticket number object to list
-            
-            System.out.println(te.list_of_Seats.get(0));
-            System.out.println(te.list_of_tickNo.get(0));
-            
-            
+
+            te.list_of_event_ids.add(te.get_event_id()); //Adds user current event ID to list
+            te.list_of_tick_prices.add(te.get_ticket_price()); //Adds user curren ticket price to list
+
         }
     }//GEN-LAST:event_Button_confirm_seatActionPerformed
 

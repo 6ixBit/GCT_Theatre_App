@@ -8,6 +8,7 @@ package Main;
 import User_functions.Home;
 import User_functions.Receipt;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,9 +20,10 @@ public class Shipping extends javax.swing.JFrame implements IF_tick {
     boolean selected = false;
     String status_msg;
     double shipping_price;
+    
+    boolean purchase_complete = false;
 
-   
-   
+    App_main ap = new App_main();
 
     public Shipping() {
         initComponents();
@@ -133,15 +135,15 @@ public class Shipping extends javax.swing.JFrame implements IF_tick {
 
         if (Btn_Standard.isSelected()) {
             selected = true;
-            status_msg = "Your order will be there in 3 to 5 days. " + "\n" + re.get_total_price() + " was charged on your account.";
+            status_msg = "Your order will be there in 3 to 5 days. " + "\n" + "£" + re.get_total_price() + " was charged on your account.";
             shipping_price = 1.00; //Sets price fo shipping method
         } else if (Btn_Express.isSelected()) {
             selected = true;
-            status_msg = "Your order will be there in 1 to 3 days. " + "\n" + re.get_total_price() + " was charged on your account.";
+            status_msg = "Your order will be there in 1 to 3 days. " + "\n" + "£" + re.get_total_price() + " was charged on your account.";
             shipping_price = 3.00;
         } else if (Btn_one_day.isSelected()) {
             selected = true;
-            status_msg = "Your order will be there within a day. " + "\n" + re.get_total_price() + " was charged on your account.";
+            status_msg = "Your order will be there within a day. " + "\n" + "£" +re.get_total_price() + " was charged on your account.";
             shipping_price = 4.99;
         } else {
             JOptionPane.showMessageDialog(null, "Please select a shipping method", "Error", JOptionPane.ERROR_MESSAGE);
@@ -153,6 +155,14 @@ public class Shipping extends javax.swing.JFrame implements IF_tick {
 
             re.add_total_price(shipping_price); //Increment total price by shipping method
             System.out.println("Receipt: "+re.get_total_price());
+            
+            te.clear(); //Clear all the variables associated to the object here
+            
+            //Reset value of shopping cart once the order has been completed
+           purchase_complete = true;
+            
+            
+            //Make database calls to refresh App_main with new user order and events
         }
     }//GEN-LAST:event_Btn_CompleteActionPerformed
 

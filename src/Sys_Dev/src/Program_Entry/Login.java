@@ -3,9 +3,10 @@ package Program_Entry;
 import javax.swing.JOptionPane;
 import Database.Singleton; //Importing Class from separate package
 import Main.App_main;
+import Main.IF_tick;
 import User_functions.*;
 
-public class Login extends javax.swing.JFrame {
+public class Login extends javax.swing.JFrame implements IF_tick {
 
     public Login() {
         initComponents();
@@ -103,8 +104,8 @@ public class Login extends javax.swing.JFrame {
 
     private void Button_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_loginActionPerformed
         // Setting up object to reference mainn form
+        
         App_main ap = new App_main();
-        User u1 = new User();
 
         //Validation check to see if fields are left empty
         if (textbox_login_Username.getText() == null || textbox_login_Username.getText().isEmpty()) {
@@ -116,6 +117,8 @@ public class Login extends javax.swing.JFrame {
             u1.set_user(textbox_login_Username.getText());
             u1.set_pass(textbox_login_Password.getText());
             Singleton.login(u1.get_user(), u1.get_pass()); //Call DB method to check login
+            u1.set_id(Singleton.login(u1.get_user(), u1.get_pass())); //Calls DB method that returns ID of user 
+            System.out.println("Your USER ID is "+u1.get_id());
 
             //If User input is found in database then
             if (Singleton.status == true) {

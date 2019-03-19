@@ -1,6 +1,7 @@
 package Database;
 
 //Import DB stuff
+import java.sql.Array;
 import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -61,7 +62,9 @@ public class Singleton {
     }
 
     //Check DB for User Login
-    public static void login(String user, String pass) {
+    public static int login(String user, String pass) {
+
+        int id = 0; //Setting up int to hold ID of user logged in
 
         Connection connect = null; //Set connector to null
 
@@ -70,13 +73,20 @@ public class Singleton {
 
             connect = DriverManager.getConnection("jdbc:ucanaccess://./GCT.accdb"); //String path to database which is the main project source folder
 
-            PreparedStatement preparedStatement = connect.prepareStatement("SELECT username,passw FROM User WHERE username=? AND passw=?"); //SQL statement to get data
+            PreparedStatement preparedStatement = connect.prepareStatement("SELECT username,passw, ID FROM User WHERE username=? AND passw=?"); //SQL statement to get data
             preparedStatement.setString(1, user);
             preparedStatement.setString(2, pass);
             ResultSet rset = preparedStatement.executeQuery(); //Creating resultset object
 
+            PreparedStatement preparedStatement2 = connect.prepareStatement("SELECT ID FROM User WHERE username=?"); //SQL statement to get data
+            preparedStatement2.setString(1, user);
+            ResultSet rset2 = preparedStatement2.executeQuery();
+
             if (rset.next()) {
                 status = true; //Setting boolean to true
+                if (rset2.next()) {
+                    id = rset2.getInt("ID"); //If the user exists then make id = the users logged in ID
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Invalid username or passowrd", "Access Denied", JOptionPane.ERROR_MESSAGE); //Throw error to user if username not found
             }
@@ -86,7 +96,7 @@ public class Singleton {
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
         }
-        //Throw Messagebox if Username not found
+        return id;
     }
 
     public static void check_user_exists(String Login) {
@@ -121,6 +131,8 @@ public class Singleton {
 
         //Count items being passed - Test - Remove when done
         int count = 0;
+        
+        
 
         Connection connect = null; //Set connector to null
 
@@ -212,6 +224,39 @@ public class Singleton {
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
         }
+    }
+    
+    public static void insert_purchase(int userid, Integer[] tickNo, String[] seatno, Double[] ticketprice, Integer[] eventid) { //Will call this at Payment form
+
+        Connection connect = null; //Set connector to null
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver"); //Loading driver
+
+            connect = DriverManager.getConnection("jdbc:ucanaccess://./GCT.accdb"); //String path to database which is the main project source folder
+            System.out.println("Connection to database successfull");
+            
+            Array ticketNo = connect.createArrayOf("int", tickNo);
+            Array seat_no = connect.createArrayOf("int", seatno);
+            Array ticket_price = connect.createArrayOf("DOUBLE", ticketprice);
+            Array event_id = connect.createArrayOf("int", eventid);
+            
+
+            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO Ticket (UserID, TicketNo, seat_no, TicketPrice, EventID)VALUES(?, ?, ?, ?, ?)"); //SQL statement to get data
+            preparedStatement.setInt(1, userid);
+            preparedStatement.setArray(2, ticketNo);
+            preparedStatement.setArray(3, seat_no);
+            preparedStatement.setArray(4, ticket_price);
+            preparedStatement.setArray(5, event_id);
+
+            preparedStatement.executeUpdate();
+
+            connect.close();
+            preparedStatement.close();
+            System.out.println("Ticket Order logged ");
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+
     }
 
     //Call this method to clear object to avoid data collision when reusing the object

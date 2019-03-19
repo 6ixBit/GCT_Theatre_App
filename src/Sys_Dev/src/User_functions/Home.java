@@ -10,9 +10,11 @@ abstract public class Home {
     protected String address;
     protected String postcode;
     protected String e_mail;
+    protected int id;
     
     //Protected vars for ticket attributes
     protected int ticket_no;
+    protected int event_id;
     protected String event_name;
     protected String event_date;
     protected double ticket_price;

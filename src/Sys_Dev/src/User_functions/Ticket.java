@@ -7,9 +7,19 @@ public class Ticket extends Home {
 
     //List to hold list of ticket numbers incase user wants multiple tickets
     public ArrayList <Integer> list_of_tickNo = new ArrayList<>();
+    public int[] list_of_tick_arr = new int[list_of_tickNo.size()];
     
     //ArrayList to hold lis of seats incase user wants to book multiple tickets
     public ArrayList <String> list_of_Seats = new ArrayList<>();
+    public String[] list_of_seats_arr = new String[list_of_Seats.size()];
+    
+    //ArrayList to hold list of ticket prices
+    public ArrayList <Double> list_of_tick_prices = new ArrayList<>();
+    public double[] list_of_tick_prices_arr = new double[list_of_tick_prices.size()];
+    
+    //ArrayList to hold EventIDs for each event
+    public ArrayList <Integer> list_of_event_ids = new ArrayList<>();
+    public int[] list_of_event_ids_arr = new int[list_of_event_ids.size()];
     
     
     public int get_ticket_no() {
@@ -18,6 +28,14 @@ public class Ticket extends Home {
 
     public void set_ticket_no(int ticket) {
         this.ticket_no = ticket;
+    }
+    
+    public int get_event_id(){
+        return event_id;
+    }
+    
+    public void set_event_id(int event_id){
+        this.event_id = event_id;
     }
 
     public String get_event_name() {
@@ -68,7 +86,7 @@ public class Ticket extends Home {
         int n = rand.nextInt(16) + 1; //Generate a random ticket number between 1 & 16 - There are 16 tickets in the cinema seating hall
 
         //Get rid of if you dont need later
-        String result = Integer.toString(n);
+        //String result = Integer.toString(n);
 
         return n;
     }

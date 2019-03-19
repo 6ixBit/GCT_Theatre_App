@@ -5,6 +5,9 @@
  */
 package Main;
 
+import Database.Singleton;
+import static Main.IF_tick.te;
+import static Main.IF_tick.u1;
 import User_functions.Ticket;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -34,8 +37,7 @@ public class Payment extends javax.swing.JFrame implements IF_tick {
         //Set value of label to show price of users current basket/tickets
         label_amount = Double.toString(te.get_ticket_price());
         amount_due.setText(label_amount);
-        
-        
+
     }
 
     /**
@@ -86,7 +88,7 @@ public class Payment extends javax.swing.JFrame implements IF_tick {
         });
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel5.setText("Amount due:");
+        jLabel5.setText("Amount due: £");
 
         Btn_Payment_next.setText("Next");
         Btn_Payment_next.addActionListener(new java.awt.event.ActionListener() {
@@ -131,7 +133,7 @@ public class Payment extends javax.swing.JFrame implements IF_tick {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(amount_due)
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -233,6 +235,14 @@ public class Payment extends javax.swing.JFrame implements IF_tick {
             //Set total of ticket price to that of Receipt
             re.set_total_price(te.get_ticket_price());
             
+            
+            te.list_of_tick_arr = te.list_of_tickNo.toArray(te.list_of_tick_arr);
+            
+            
+            
+            
+            //Make database writes to
+             Singleton.insert_purchase(u1.get_id(), te.list_of_tickNo, te.list_of_Seats, te.list_of_tick_prices, te.list_of_event_ids);
         }
 
 
