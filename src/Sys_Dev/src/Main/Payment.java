@@ -9,6 +9,7 @@ import Database.Singleton;
 import static Main.IF_tick.te;
 import static Main.IF_tick.u1;
 import User_functions.Ticket;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -220,7 +221,7 @@ public class Payment extends javax.swing.JFrame implements IF_tick {
     }//GEN-LAST:event_textField_cscActionPerformed
 
     private void Btn_Payment_nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Payment_nextActionPerformed
-
+        
         if (textfield_card.getText() == null || textfield_card.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please enter your card number", "Stop", JOptionPane.ERROR_MESSAGE);
         } else if (textField_csc.getText() == null || textField_csc.getText().isEmpty()) {
@@ -231,22 +232,28 @@ public class Payment extends javax.swing.JFrame implements IF_tick {
 
             //Show shipping form
             sh.show();
-            
+
             //Set total of ticket price to that of Receipt
             re.set_total_price(te.get_ticket_price());
             
-            
-            te.list_of_tick_arr = te.list_of_tickNo.toArray(te.list_of_tick_arr);
-            
-            
+            int[] x = convertIntegers(te.list_of_tickNo);
+            int[] y = convertIntegers(te.list_of_event_ids);
             
             
-            //Make database writes to
-             Singleton.insert_purchase(u1.get_id(), te.list_of_tickNo, te.list_of_Seats, te.list_of_tick_prices, te.list_of_event_ids);
+            
+            Singleton.insert(u1.get_id(), x, y);
+            
         }
-
-
     }//GEN-LAST:event_Btn_Payment_nextActionPerformed
+    
+    public static int[] convertIntegers(ArrayList<Integer> integers) {
+        int[] ret = new int[integers.size()];
+        for (int i = 0; i < ret.length; i++) {
+            ret[i] = integers.get(i);
+        }
+        return ret;
+    }
+
 
     /**
      * @param args the command line arguments

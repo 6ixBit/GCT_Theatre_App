@@ -258,6 +258,36 @@ public class Singleton {
         }
 
     }
+    
+    public static void insert(int userid, int[] ticket_no, int[] eventid) {
+
+        Connection connect = null; //Set connector to null
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver"); //Loading driver
+
+            connect = DriverManager.getConnection("jdbc:ucanaccess://./GCT.accdb"); //String path to database which is the main project source folder
+            System.out.println("Connection to database successfull");
+
+            PreparedStatement preparedStatement = null;
+
+            for (int i = 0; i < ticket_no.length; i++) {
+                preparedStatement = connect.prepareStatement("INSERT INTO Ticket (UserID, TicketNo, EventID) VALUES (?, ?, ?)"); //Set prepared statement for SQL command
+                preparedStatement.setInt(1, userid);
+                preparedStatement.setInt(2, ticket_no[i]);
+                preparedStatement.setInt(3, eventid[i]);
+            }
+
+            int j = preparedStatement.executeUpdate();
+            System.out.println(j + "Records inserted");
+
+            connect.close();
+            preparedStatement.close();
+            System.out.println("Ticket Order logged ");
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
 
     //Call this method to clear object to avoid data collision when reusing the object
     public static void clear(String user, String pass, String address, String numb, String email, String postcode) {
