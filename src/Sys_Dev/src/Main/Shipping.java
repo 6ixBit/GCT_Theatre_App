@@ -5,11 +5,16 @@
  */
 package Main;
 
+import Database.Singleton;
 import User_functions.Home;
 import User_functions.Receipt;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import static net.ucanaccess.converters.Functions.date;
 
 /**
  *
@@ -24,6 +29,10 @@ public class Shipping extends javax.swing.JFrame implements IF_tick {
     boolean purchase_complete = false;
 
     App_main ap = new App_main();
+    
+    Date date = new Date();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+    String get_date = dateFormat.format(date).toString();
 
     public Shipping() {
         initComponents();
@@ -133,18 +142,23 @@ public class Shipping extends javax.swing.JFrame implements IF_tick {
 
     private void Btn_CompleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_CompleteActionPerformed
 
+        String[] method = {"Standard Delivery", "Express Delivery", "One day Delivery"};
+        
         if (Btn_Standard.isSelected()) {
             selected = true;
             status_msg = "Your order will be there in 3 to 5 days. " + "\n" + "£" + re.get_total_price() + " was charged on your account.";
             shipping_price = 1.00; //Sets price fo shipping method
+            re.set_shipping_method(method[0]);
         } else if (Btn_Express.isSelected()) {
             selected = true;
             status_msg = "Your order will be there in 1 to 3 days. " + "\n" + "£" + re.get_total_price() + " was charged on your account.";
             shipping_price = 3.00;
+            re.set_shipping_method(method[1]);
         } else if (Btn_one_day.isSelected()) {
             selected = true;
             status_msg = "Your order will be there within a day. " + "\n" + "£" +re.get_total_price() + " was charged on your account.";
             shipping_price = 4.99;
+            re.set_shipping_method(method[2]);
         } else {
             JOptionPane.showMessageDialog(null, "Please select a shipping method", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -154,7 +168,7 @@ public class Shipping extends javax.swing.JFrame implements IF_tick {
             this.hide(); //If user selects a shipping method then close shipping JFrame
 
             re.add_total_price(shipping_price); //Increment total price by shipping method
-            System.out.println("Receipt: "+re.get_total_price());
+         
             
             te.clear(); //Clear all the variables associated to the object here
             
@@ -163,6 +177,13 @@ public class Shipping extends javax.swing.JFrame implements IF_tick {
             
             
             //Make database calls to refresh App_main with new user order and events
+            System.out.println(get_date);
+            System.out.println(re.get_shipping_method());
+            System.out.println(re.generate_receipt());
+            System.out.println("Receipt: "+re.get_total_price());
+            
+            
+            Singleton.insert_receipt(u1.get_id(), re.get_shipping_method(), re.generate_receipt(), get_date, re.get_total_price());
         }
     }//GEN-LAST:event_Btn_CompleteActionPerformed
 

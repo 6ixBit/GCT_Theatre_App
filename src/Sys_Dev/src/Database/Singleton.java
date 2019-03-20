@@ -225,40 +225,7 @@ public class Singleton {
             ex.printStackTrace();
         }
     }
-    
-    public static void insert_purchase(int userid, Integer[] tickNo, String[] seatno, Double[] ticketprice, Integer[] eventid) { //Will call this at Payment form
-
-        Connection connect = null; //Set connector to null
-        try {
-            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver"); //Loading driver
-
-            connect = DriverManager.getConnection("jdbc:ucanaccess://./GCT.accdb"); //String path to database which is the main project source folder
-            System.out.println("Connection to database successfull");
-            
-            Array ticketNo = connect.createArrayOf("int", tickNo);
-            Array seat_no = connect.createArrayOf("int", seatno);
-            Array ticket_price = connect.createArrayOf("DOUBLE", ticketprice);
-            Array event_id = connect.createArrayOf("int", eventid);
-            
-
-            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO Ticket (UserID, TicketNo, seat_no, TicketPrice, EventID)VALUES(?, ?, ?, ?, ?)"); //SQL statement to get data
-            preparedStatement.setInt(1, userid);
-            preparedStatement.setArray(2, ticketNo);
-            preparedStatement.setArray(3, seat_no);
-            preparedStatement.setArray(4, ticket_price);
-            preparedStatement.setArray(5, event_id);
-
-            preparedStatement.executeUpdate();
-
-            connect.close();
-            preparedStatement.close();
-            System.out.println("Ticket Order logged ");
-        } catch (ClassNotFoundException | SQLException ex) {
-            ex.printStackTrace();
-        }
-
-    }
-    
+      
     public static void insert(int userid, int[] ticket_no, int[] eventid, String[] seat_no, double[] ticketPrice) {
 
         Connection connect = null; //Set connector to null
@@ -288,7 +255,35 @@ public class Singleton {
         }
 
     }
+    
+    
+    public static void insert_receipt(int userid, String shipping_method, String receipt_no, String date, double totalPrice) {
 
+        Connection connect = null; //Set connector to null
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver"); //Loading driver
+
+            connect = DriverManager.getConnection("jdbc:ucanaccess://./GCT.accdb"); //String path to database which is the main project source folder
+
+            PreparedStatement preparedStatement = null;
+
+            preparedStatement = connect.prepareStatement("INSERT INTO Receipt (UserID, Shipping_method, ReceiptNo, Receipt_date, Total_price) VALUES (?, ?, ?, ?, ?)"); //Set prepared statement for SQL command
+            preparedStatement.setInt(1, userid);
+            preparedStatement.setString(2, shipping_method);
+            preparedStatement.setString(3, receipt_no);
+            preparedStatement.setString(4, date);
+            preparedStatement.setDouble(5, totalPrice);
+            preparedStatement.executeUpdate();
+
+            connect.close();
+            preparedStatement.close();
+            System.out.println("Receipt Order logged ");
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+    
     //Call this method to clear object to avoid data collision when reusing the object
     public static void clear(String user, String pass, String address, String numb, String email, String postcode) {
         user = "";

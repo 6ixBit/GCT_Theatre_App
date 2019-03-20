@@ -20,11 +20,11 @@ public class Receipt extends Home {
         this.receipt_date = receipt_date;
     }
 
-    public double get_shipping_method() {
+    public String get_shipping_method() {
         return shipping_method;
     }
 
-    public void set_shipping_method(double shipping_method) {
+    public void set_shipping_method(String shipping_method) {
         this.shipping_method = shipping_method;
     }
 
