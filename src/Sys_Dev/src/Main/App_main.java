@@ -63,7 +63,6 @@ public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
      //variable to store event id
      int ev_id;
      
-
     public App_main() {
         initComponents();
         this.setResizable(false);
@@ -500,9 +499,7 @@ public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
         } else {
 
             py.show(); //Bring up payment page
-            System.out.println("Your username is "+ u1.get_user());
         }
-
     }//GEN-LAST:event_Btn_CheckoutActionPerformed
 
     /**

@@ -259,26 +259,26 @@ public class Singleton {
 
     }
     
-    public static void insert(int userid, int[] ticket_no, int[] eventid) {
+    public static void insert(int userid, int[] ticket_no, int[] eventid, String[] seat_no, double[] ticketPrice) {
 
         Connection connect = null; //Set connector to null
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver"); //Loading driver
 
             connect = DriverManager.getConnection("jdbc:ucanaccess://./GCT.accdb"); //String path to database which is the main project source folder
-            System.out.println("Connection to database successfull");
 
             PreparedStatement preparedStatement = null;
 
-            for (int i = 0; i < ticket_no.length; i++) {
-                preparedStatement = connect.prepareStatement("INSERT INTO Ticket (UserID, TicketNo, EventID) VALUES (?, ?, ?)"); //Set prepared statement for SQL command
+            for (int i = 0; i < eventid.length; i++) {
+                preparedStatement = connect.prepareStatement("INSERT INTO Ticket (UserID, TicketNo, EventID, seat_no, TicketPrice) VALUES (?, ?, ?, ?, ?)"); //Set prepared statement for SQL command
                 preparedStatement.setInt(1, userid);
                 preparedStatement.setInt(2, ticket_no[i]);
                 preparedStatement.setInt(3, eventid[i]);
+                preparedStatement.setString(4, seat_no[i]);
+                preparedStatement.setDouble(5, ticketPrice[i]);
+                int j = preparedStatement.executeUpdate();
+                System.out.println(j + " Records inserted");
             }
-
-            int j = preparedStatement.executeUpdate();
-            System.out.println(j + "Records inserted");
 
             connect.close();
             preparedStatement.close();

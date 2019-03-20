@@ -235,14 +235,21 @@ public class Payment extends javax.swing.JFrame implements IF_tick {
 
             //Set total of ticket price to that of Receipt
             re.set_total_price(te.get_ticket_price());
-            
-            int[] x = convertIntegers(te.list_of_tickNo);
-            int[] y = convertIntegers(te.list_of_event_ids);
-            
-            
-            
-            Singleton.insert(u1.get_id(), x, y);
-            
+
+            int[] x = convertIntegers(te.list_of_tickNo); //@param 1 - SIngleton.Insert
+            int[] y = convertIntegers(te.list_of_event_ids); //@param 2 - Singleton.Insert       
+            te.list_of_seats_arr = te.list_of_Seats.toArray(te.list_of_seats_arr); //@param 3 - Singleton.Insert  
+            double[] list_of_tick_prices_arr = new double[te.list_of_tick_prices.size()]; //@param 4 - Singleton.Insert  
+
+            for (int bbw = 0; bbw < list_of_tick_prices_arr.length; bbw++) {
+                list_of_tick_prices_arr[bbw] = te.list_of_tick_prices.get(bbw);
+            }
+
+            for (double jj : list_of_tick_prices_arr) {
+                System.out.println(jj);
+            }
+
+            Singleton.insert(u1.get_id(), x, y, te.list_of_seats_arr, list_of_tick_prices_arr); //DB call to post user order
         }
     }//GEN-LAST:event_Btn_Payment_nextActionPerformed
     
