@@ -103,10 +103,7 @@ public class Login extends javax.swing.JFrame implements IF_tick {
     }//GEN-LAST:event_Button_signupActionPerformed
 
     private void Button_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_loginActionPerformed
-        // Setting up object to reference mainn form
-        
-        App_main ap = new App_main();
-
+      
         //Validation check to see if fields are left empty
         if (textbox_login_Username.getText() == null || textbox_login_Username.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please enter a username", "Stop", JOptionPane.ERROR_MESSAGE);
@@ -132,7 +129,7 @@ public class Login extends javax.swing.JFrame implements IF_tick {
             Singleton.User_Orders(u1.get_user(), ap.total_prices, ap.receipt_dates, ap.receipt_nos);
 
             //Converts arraylist to array so it can be read
-            ap.total_prices_str = ap.total_prices.toArray(ap.total_prices_str); //This doesn't work because it occurs upon the loading off the program
+            ap.total_prices_str = ap.total_prices.toArray(ap.total_prices_str); 
             ap.receipt_dates_str = ap.receipt_dates.toArray(ap.receipt_dates_str);
             ap.receipt_nos_str = ap.receipt_nos.toArray(ap.receipt_nos_str);
 

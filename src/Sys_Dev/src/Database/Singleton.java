@@ -35,7 +35,7 @@ public class Singleton {
     }
 
     //Insert Sign up Info into database
-    public static void InsertData(String user, String pass, String address, String numb, String email, String postcode) {
+    public static void InsertData(String user, String pass, String address, String numb, String email, String postcode) { //Insert sign up info for users
 
         Connection connect = null; //Set connector to null
         try {
@@ -131,9 +131,7 @@ public class Singleton {
 
         //Count items being passed - Test - Remove when done
         int count = 0;
-        
-        
-
+       
         Connection connect = null; //Set connector to null
 
         try {
@@ -226,7 +224,7 @@ public class Singleton {
         }
     }
       
-    public static void insert(int userid, int[] ticket_no, int[] eventid, String[] seat_no, double[] ticketPrice) {
+    public static void insert(int userid, int[] ticket_no, int[] eventid, String[] seat_no, double[] ticketPrice) { //Method to insert ticket info for users
 
         Connection connect = null; //Set connector to null
         try {
@@ -256,6 +254,17 @@ public class Singleton {
 
     }
     
+    public static void insert_review(){
+        
+        
+        
+        
+        
+    }
+    
+    public static void read_review(int userid){
+        
+    }
     
     public static void insert_receipt(int userid, String shipping_method, String receipt_no, String date, double totalPrice) {
 

@@ -6,6 +6,7 @@
 package Main;
 
 import Database.Singleton;
+import static Main.App_main.images;
 import User_functions.Home;
 import User_functions.Receipt;
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
@@ -14,6 +15,7 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import static net.ucanaccess.converters.Functions.date;
 
 /**
@@ -25,13 +27,11 @@ public class Shipping extends javax.swing.JFrame implements IF_tick {
     boolean selected = false;
     String status_msg;
     double shipping_price;
-    
+
     boolean purchase_complete = false;
 
-    App_main ap = new App_main();
-    
     Date date = new Date();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     String get_date = dateFormat.format(date).toString();
 
     public Shipping() {
@@ -143,7 +143,7 @@ public class Shipping extends javax.swing.JFrame implements IF_tick {
     private void Btn_CompleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_CompleteActionPerformed
 
         String[] method = {"Standard Delivery", "Express Delivery", "One day Delivery"};
-        
+
         if (Btn_Standard.isSelected()) {
             selected = true;
             status_msg = "Your order will be there in 3 to 5 days. " + "\n" + "£" + re.get_total_price() + " was charged on your account.";
@@ -156,7 +156,7 @@ public class Shipping extends javax.swing.JFrame implements IF_tick {
             re.set_shipping_method(method[1]);
         } else if (Btn_one_day.isSelected()) {
             selected = true;
-            status_msg = "Your order will be there within a day. " + "\n" + "£" +re.get_total_price() + " was charged on your account.";
+            status_msg = "Your order will be there within a day. " + "\n" + "£" + re.get_total_price() + " was charged on your account.";
             shipping_price = 4.99;
             re.set_shipping_method(method[2]);
         } else {
@@ -168,25 +168,48 @@ public class Shipping extends javax.swing.JFrame implements IF_tick {
             this.hide(); //If user selects a shipping method then close shipping JFrame
 
             re.add_total_price(shipping_price); //Increment total price by shipping method
-         
-            
+
             te.clear(); //Clear all the variables associated to the object here
-            
+
             //Reset value of shopping cart once the order has been completed
-           purchase_complete = true;
-            
-            
-            //Make database calls to refresh App_main with new user order and events
-            System.out.println(get_date);
-            System.out.println(re.get_shipping_method());
-            System.out.println(re.generate_receipt());
-            System.out.println("Receipt: "+re.get_total_price());
-            
-            
+            purchase_complete = true;
+
+            //Make database calls to refresh App_main with new user order and events    
             Singleton.insert_receipt(u1.get_id(), re.get_shipping_method(), re.generate_receipt(), get_date, re.get_total_price());
+
+            //Empty out the array list so that new fresh data can be added
+            ap.total_prices.clear();
+            ap.receipt_dates.clear();
+            ap.receipt_nos.clear();
+            
+            //Clear table
+            ap.clear_table();
+
+            //Refresh your orders table
+            Singleton.User_Orders(u1.get_user(), ap.total_prices, ap.receipt_dates, ap.receipt_nos);
+             
+            //Fill table
+            ap.Table_Fill("Greenwich Theatre");
         }
     }//GEN-LAST:event_Btn_CompleteActionPerformed
 
+    public void your_order_table_fill() {
+
+        String[] receipt_nos_str = new String[ap.receipt_nos.size()];
+        String[] receipt_dates_str = new String[ap.receipt_dates.size()];
+        String[] total_prices_str = new String[ap.total_prices.size()];
+
+        DefaultTableModel model_2 = (DefaultTableModel) ap.table_YourOrders.getModel();
+
+        for (int h = 0; h < total_prices_str.length; h++) {
+            model_2.addRow(new Object[]{receipt_dates_str[h], receipt_nos_str[h], total_prices_str[h]});
+        }
+
+        ap.table_YourOrders.setModel(model_2);
+
+    }
+    
+    
     /**
      * @param args the command line arguments
      */

@@ -21,5 +21,6 @@ public interface IF_tick {
     Receipt re = new Receipt();
     Shipping sh = new Shipping();
     User u1 = new User();
+    App_main ap = new App_main(); 
 
 }
