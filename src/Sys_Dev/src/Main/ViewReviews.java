@@ -20,6 +20,8 @@ public class ViewReviews extends javax.swing.JFrame implements IF_tick {
      */
     public ViewReviews() {
         initComponents();
+        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        this.setResizable(false);
 
     }
     
@@ -83,15 +85,12 @@ public class ViewReviews extends javax.swing.JFrame implements IF_tick {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap(107, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label_event)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(95, 95, 95))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(label_event)
+                        .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,15 +99,18 @@ public class ViewReviews extends javax.swing.JFrame implements IF_tick {
                                     .addComponent(prev_review)
                                     .addGap(37, 37, 37)
                                     .addComponent(next_review)))
-                            .addGap(147, 147, 147)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(147, 147, 147))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(80, 80, 80))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(23, 23, 23)
                 .addComponent(jLabel1)
-                .addGap(35, 35, 35)
+                .addGap(18, 18, 18)
                 .addComponent(label_event)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -142,7 +144,13 @@ public class ViewReviews extends javax.swing.JFrame implements IF_tick {
 
     private void prev_reviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prev_reviewActionPerformed
         // TODO add your handling code here:
-       
+       if (index > 0){
+           index--;
+           
+            label_rating.setText(ap.ratings_int[index]); //Set label rating to whatever is in array
+            textarea_review.setText(ap.actual_review_str[index]);
+            label_event.setText(ap.event_names_str[index]);
+       }
     }//GEN-LAST:event_prev_reviewActionPerformed
 
     /**
