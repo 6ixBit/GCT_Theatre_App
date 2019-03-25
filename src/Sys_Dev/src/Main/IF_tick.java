@@ -16,11 +16,12 @@ import User_functions.User;
 public interface IF_tick {
 
     //Interface that can be utilised by classes so that they can share one object
-
     Ticket te = new Ticket();
     Receipt re = new Receipt();
     Shipping sh = new Shipping();
-    User u1 = new User();
-    App_main ap = new App_main(); 
+    public User u1 = new User();
+    App_main ap = new App_main();
+    Reviews rs = new Reviews();
+    ViewReviews vr = new ViewReviews(); //This throws an error
 
 }

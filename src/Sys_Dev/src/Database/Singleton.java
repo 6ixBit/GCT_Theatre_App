@@ -1,6 +1,7 @@
 package Database;
 
 //Import DB stuff
+import Main.IF_tick;
 import java.sql.Array;
 import java.util.*;
 import java.sql.Connection;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 //Singleton Design Pattern - All Classes that talk to database go through this class
-public class Singleton {
+public class Singleton implements IF_tick {
 
     private static Singleton instance = null;
 
@@ -254,16 +255,86 @@ public class Singleton {
 
     }
     
-    public static void insert_review(){
-        
-        
-        
-        
-        
+    public static void insert_review(String info, int rating, int eventID) {
+
+        Connection connect = null; //Set connector to null
+
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver"); //Loading driver
+
+            connect = DriverManager.getConnection("jdbc:ucanaccess://./GCT.accdb"); //String path to database which is the main project source folder
+
+            PreparedStatement preparedStatement = null;
+
+            preparedStatement = connect.prepareStatement("INSERT INTO Reviews (info, Rating, EventID) VALUES (?, ?, ?);"); //Set prepared statement for SQL command
+            preparedStatement.setString(1, info);
+            preparedStatement.setInt(2, rating);
+            preparedStatement.setInt(3, eventID);
+            preparedStatement.execute();
+            
+            System.out.println("Writing review sucessful");
+
+            connect.close();
+            preparedStatement.close();
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    public static int read_eventid(String event_name) {
+        Connection connect = null; //Set connector to null
+
+        int id = 0;
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver"); //Loading driver
+
+            connect = DriverManager.getConnection("jdbc:ucanaccess://./GCT.accdb"); //String path to database which is the main project source folder
+
+            PreparedStatement preparedStatement = null;
+
+            preparedStatement = connect.prepareStatement("SELECT ID FROM Event WHERE event_name=?;"); //Set prepared statement for SQL command
+            preparedStatement.setString(1, event_name);
+            ResultSet rset = preparedStatement.executeQuery(); //Creating resultset object
+
+            if (rset.next()) {
+                id = rset.getInt("ID");
+            }
+
+            connect.close();
+            preparedStatement.close();
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+        return id;
     }
     
-    public static void read_review(int userid){
-        
+    public static void read_review(ArrayList event_name, ArrayList info, ArrayList ratings, String event) {
+
+        Connection connect = null; //Set connector to null
+
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver"); //Loading driver
+
+            connect = DriverManager.getConnection("jdbc:ucanaccess://./GCT.accdb"); //String path to database which is the main project source folder
+
+            PreparedStatement preparedStatement = connect.prepareStatement("SELECT info, Rating, event_name FROM Reviews As r, Event AS e WHERE r.EventID = e.ID AND e.event_name =?"); //SQL statement to get data
+            preparedStatement.setString(1, event);
+            ResultSet rset = preparedStatement.executeQuery(); //Creating resultset object
+           
+
+            while (rset.next()) { //Add values from DB query to arraylists
+                event_name.add(rset.getString("event_name"));
+                info.add(rset.getString("info"));
+                ratings.add(rset.getString("Rating"));
+            }
+
+            connect.close();
+            preparedStatement.close();
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+
     }
     
     public static void insert_receipt(int userid, String shipping_method, String receipt_no, String date, double totalPrice) {

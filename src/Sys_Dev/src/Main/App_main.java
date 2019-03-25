@@ -5,14 +5,13 @@ import Database.Singleton; //Importing Class from separate package
 import java.util.ArrayList;
 
 import User_functions.*;
-import java.awt.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import javax.swing.table.DefaultTableModel;
 
-public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
+public class App_main extends javax.swing.JFrame implements IF_tick{
 
     //This will be used by all the lists to determine what part of the slide show gets shown to the user.
     private int index = 0;
@@ -64,6 +63,22 @@ public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
      //variable to store event id
      int ev_id;
      
+     //varibale to old event id for reviews
+     int reviews_ev_id;
+     
+     
+      //Arraylist and Array to store event names for review
+    ArrayList<String> event_names = new ArrayList<>();
+    String[] event_names_str = new String[event_names.size()];
+     
+     //Arraylist and Array to store ratings for each review
+    ArrayList<Integer> ratings = new ArrayList<>();
+    String[] ratings_int = new String[ratings.size()];
+    
+    //Arraylist and Array to store description of review
+    ArrayList<String> actual_review = new ArrayList<>();
+    String[] actual_review_str = new String[actual_review.size()];
+     
     public App_main() {
         initComponents();
         this.setResizable(false);
@@ -81,9 +96,9 @@ public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
         
         //IMages Testing
         // myImages = images.toArray(new byte[0]);
-        for (int f = 0; f < myImages.length; f++) {
-            myImages[f] = images.get(f);
-        }
+       // for (int f = 0; f < myImages.length; f++) {
+         //   myImages[f] = images.get(f);
+        //}
         
         
         System.out.println("You are this long" + myImages.length);
@@ -152,7 +167,7 @@ public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
         }
 
     }
-    
+
     //Method to split date string using regex
     public String split_date(String element) {
         String[] test = element.split("00");
@@ -203,6 +218,7 @@ public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
         jLabel10 = new javax.swing.JLabel();
         Btn_Checkout = new javax.swing.JToggleButton();
         Button_leave_review = new javax.swing.JButton();
+        Button_view_reviews = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -329,6 +345,13 @@ public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
             }
         });
 
+        Button_view_reviews.setText("View reviews");
+        Button_view_reviews.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_view_reviewsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -384,7 +407,9 @@ public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
                                 .addComponent(jLabel10)
                                 .addGap(198, 198, 198))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(Button_leave_review)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(Button_leave_review, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Button_view_reviews, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
@@ -438,16 +463,17 @@ public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
                         .addComponent(Label_Event_1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Button_leave_review)
+                                .addGap(14, 14, 14)
+                                .addComponent(Button_view_reviews))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel6)
                                 .addGap(18, 18, 18)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addComponent(Button_leave_review)))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel10)
                         .addGap(18, 18, 18)
@@ -552,24 +578,63 @@ public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
     }//GEN-LAST:event_Btn_CheckoutActionPerformed
 
     private void Button_leave_reviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_leave_reviewActionPerformed
-        // TODO add your handling code here:
-        int row = table_YourOrders.getSelectedRow(); //Get selected row from user
-        int column = 1; //Set column to get data from
-        String value = table_YourOrders.getModel().getValueAt(row, column).toString();
-        
-        System.out.println("Print:" + value);
+        // TODO add your handling code here: 
+        int row = table_Upcoming.getSelectedRow(); //Get selected row from user
+
+        if (row == -1) { //If a row isn't selected throw an error in turn handling the potential null pointer
+            JOptionPane.showMessageDialog(null, "Please select a row from the Upcoming table");
+        } else {
+            int column = 0; //Set column to get data from
+            String value = table_Upcoming.getModel().getValueAt(row, column).toString();
+
+            int id = Singleton.read_eventid(value); //@id to be used to write review to database
+            reviews_ev_id = id; //Assign local variable to global field
+
+            rs.show(); //Call reviews method
+            rs.get_Label_review_title().setText(value); //Set text of event selected on review JFrame
+
+        }
     }//GEN-LAST:event_Button_leave_reviewActionPerformed
 
+    private void Button_view_reviewsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_view_reviewsActionPerformed
+        int row = table_Upcoming.getSelectedRow(); //Get selected row from user
+
+        if (row == -1) { //If a row isn't selected throw an error in turn handling the potential null pointer
+            JOptionPane.showMessageDialog(null, "Please select a row from the Upcoming table");
+        } else {
+            int column = 0; //Set column to get data from
+            String value = table_Upcoming.getModel().getValueAt(row, column).toString();
+
+            //TODO code goes here
+            Singleton.read_review(event_names, actual_review, ratings, value); //Make DB call
+
+            event_names_str = event_names.toArray(event_names_str);
+            actual_review_str = actual_review.toArray(actual_review_str);
+            ratings_int = ratings.toArray(new String[ratings.size()]);
+
+            vr.reviews();
+
+            vr.show(); //Bring up vr JFrame
+
+        }
+    }//GEN-LAST:event_Button_view_reviewsActionPerformed
+
+   public int[] convertIntegers(ArrayList<Integer> integers)
+{
+    int[] ret = new int[integers.size()];
+    for (int i=0; i < ret.length; i++)
+    {
+        ret[i] = integers.get(i).intValue();
+    }
+    return ret;
+}
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
 
-            //Creating thread object
-        Runnable r1 = new App_main();
-        Thread t1 = new Thread(r1);
-        //Start thread
-        t1.start();
+;
         
         
         /* Set the Nimbus look and feel */
@@ -607,6 +672,7 @@ public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
     private javax.swing.JToggleButton Btn_Checkout;
     private javax.swing.JButton Button_Order_Ticket;
     private javax.swing.JButton Button_leave_review;
+    private javax.swing.JButton Button_view_reviews;
     private javax.swing.JComboBox Cmb_Order;
     private javax.swing.JLabel Event_1;
     private javax.swing.JLabel Label_8;
@@ -634,9 +700,4 @@ public class App_main extends javax.swing.JFrame implements IF_tick, Runnable{
     public javax.swing.JTable table_YourOrders;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void run() {
-
-        //Call method to consistenyl update tables in the background
-    }
 }

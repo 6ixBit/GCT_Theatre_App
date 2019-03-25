@@ -103,7 +103,7 @@ public class Login extends javax.swing.JFrame implements IF_tick {
     }//GEN-LAST:event_Button_signupActionPerformed
 
     private void Button_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_loginActionPerformed
-      
+
         //Validation check to see if fields are left empty
         if (textbox_login_Username.getText() == null || textbox_login_Username.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please enter a username", "Stop", JOptionPane.ERROR_MESSAGE);
@@ -115,7 +115,7 @@ public class Login extends javax.swing.JFrame implements IF_tick {
             u1.set_pass(textbox_login_Password.getText());
             Singleton.login(u1.get_user(), u1.get_pass()); //Call DB method to check login
             u1.set_id(Singleton.login(u1.get_user(), u1.get_pass())); //Calls DB method that returns ID of user 
-            System.out.println("Your USER ID is "+u1.get_id());
+            System.out.println("Your USER ID is " + u1.get_id());
 
             //If User input is found in database then
             if (Singleton.status == true) {
@@ -129,7 +129,7 @@ public class Login extends javax.swing.JFrame implements IF_tick {
             Singleton.User_Orders(u1.get_user(), ap.total_prices, ap.receipt_dates, ap.receipt_nos);
 
             //Converts arraylist to array so it can be read
-            ap.total_prices_str = ap.total_prices.toArray(ap.total_prices_str); 
+            ap.total_prices_str = ap.total_prices.toArray(ap.total_prices_str);
             ap.receipt_dates_str = ap.receipt_dates.toArray(ap.receipt_dates_str);
             ap.receipt_nos_str = ap.receipt_nos.toArray(ap.receipt_nos_str);
 
