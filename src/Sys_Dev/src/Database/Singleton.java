@@ -21,6 +21,9 @@ public class Singleton implements IF_tick {
     
     //Check if Login username already exists
     public static boolean exists = false;
+    
+    //Check if Reviews exists
+    public static boolean review_exists = false;
 
     //So that other classes can't create an instance of it
     private Singleton() {
@@ -323,11 +326,15 @@ public class Singleton implements IF_tick {
             ResultSet rset = preparedStatement.executeQuery(); //Creating resultset object
            
 
-            while (rset.next()) { //Add values from DB query to arraylists
+             while (rset.next()) { //Add values from DB query to arraylists
                 event_name.add(rset.getString("event_name"));
                 info.add(rset.getString("info"));
                 ratings.add(rset.getString("Rating"));
-            }
+                review_exists = true;
+             }
+           if (rset.next()){
+               review_exists = true;
+           }
 
             connect.close();
             preparedStatement.close();

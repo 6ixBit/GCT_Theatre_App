@@ -605,16 +605,25 @@ public class App_main extends javax.swing.JFrame implements IF_tick{
             int column = 0; //Set column to get data from
             String value = table_Upcoming.getModel().getValueAt(row, column).toString();
 
+            event_names.clear();
+            actual_review.clear();
+            ratings.clear();
+         
+            
             //TODO code goes here
             Singleton.read_review(event_names, actual_review, ratings, value); //Make DB call
-
+            
             event_names_str = event_names.toArray(event_names_str);
             actual_review_str = actual_review.toArray(actual_review_str);
             ratings_int = ratings.toArray(new String[ratings.size()]);
 
-            vr.reviews();
+            if (event_names.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Sorry, no reviews exist for this event");
+            } else {
+                vr.reviews();
 
-            vr.show(); //Bring up vr JFrame
+                vr.show(); //Bring up vr JFrame
+            }
 
         }
     }//GEN-LAST:event_Button_view_reviewsActionPerformed
