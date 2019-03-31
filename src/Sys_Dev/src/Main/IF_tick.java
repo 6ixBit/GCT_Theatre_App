@@ -23,5 +23,6 @@ public interface IF_tick {
     App_main ap = new App_main();
     Reviews rs = new Reviews();
     ViewReviews vr = new ViewReviews(); //This throws an error
+    Sign_up su = new Sign_up(); //Creates object to access sign up form
 
 }

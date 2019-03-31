@@ -1,4 +1,4 @@
-package Program_Entry;
+package Main;
 
 import javax.swing.JOptionPane;
 import Database.Singleton; //Importing Class from separate package

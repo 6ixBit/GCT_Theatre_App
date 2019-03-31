@@ -1,4 +1,4 @@
-package Program_Entry;
+package RUN_ME;
 
 import javax.swing.JOptionPane;
 import Database.Singleton; //Importing Class from separate package
@@ -98,7 +98,6 @@ public class Login extends javax.swing.JFrame implements IF_tick {
 
     private void Button_signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_signupActionPerformed
         // TODO add your handling code here:
-        Sign_up su = new Sign_up(); //Creates object to access sign up form
         su.setVisible(true); //If sign up button is clicked open this form
     }//GEN-LAST:event_Button_signupActionPerformed
 
